@@ -1,0 +1,25 @@
+site_name: Ros2_control
+nav:
+  - Introducción e instalación: index.md
+  - Los paquetes de ros2_control: ros2control.md
+  - Conceptos básicos de ros2_control: conceptos_basicos.md
+  - Interfaz hardware: hardware.md
+  - Creación de un controlador propio: controlador_propio.md
+theme:
+  features:
+    - content.code.select
+    - content.code.copy
+  name: material
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
