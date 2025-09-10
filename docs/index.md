@@ -30,7 +30,7 @@ https://drive.google.com/file/d/12ewBfOP8iy8qGsxEbxkmnFHaRmRGo1lo/view?usp=drive
 ```
 Este zip contiene la carpeta ros2_robot_sca que contiene la simulación de un robot de dos grados de libertad que se utilizará a lo largo de la práctica.
 
-Ahora ya se podrá compilar el repositorio:
+Ahora ya se puede compilar el repositorio:
 ```
 cd ~/ros2_ws/
 . /opt/ros/jazzy/setup.sh
