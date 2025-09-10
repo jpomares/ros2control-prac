@@ -381,12 +381,17 @@ ros2 param set /pid_position_velocity_controller gains.joint1.p 15.0
 ros2 param set /pid_position_velocity_controller gains.joint2.i 0.2
 ```
 
-Por último, una forma de evaluar si el robot se está posicionando correctamente, es obtener una gráfica de la evolución de las articulaciones en los distintos experimentos. Para ello, se puede utilizar ROS 2 + rqt_plot:
-```
-ros2 run rqt_plot rqt_plot /joint_states/position[0] rqt_plot /joint_states/position[0]
-```
+Por último, una forma de evaluar si el robot se está posicionando correctamente, es obtener una gráfica de la evolución de las articulaciones en los distintos experimentos. 
+
+<!--
+ Para ello, se puede utilizar ROS 2 + rqt_plot:
+ ```
+ ros2 run rqt_plot rqt_plot /joint_states/position[0] rqt_plot /joint_states/position[0]
+ ```
 Desde qt_plot se pueden introducir topics adicionales a plotear desde el cuadro de texto Topics.
+-->
+
 
 !!! note annotate "Ejercicio"
 
-    Diseñar un nuevo controlador con referencia posición y acción de control esfuerzo. Ajustarlo y probar que se alcancen bien distintas posiciones de referencia.
+    Diseñar un nuevo controlador con referencia posición y acción de control esfuerzo. Ajustarlo y probar que se alcancen bien distintas posiciones de referencia. Para ello, diseñar un script que permita representar la evolución de la posición de las articulaciones.
