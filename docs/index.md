@@ -4,6 +4,10 @@ Los robots ejecutan múltiples algoritmos de control simultáneamente y gestiona
 
 Para desarrollar esta práctica debe estar instalado ros2_control así como una simulación de un robot RR de dos grados de libertad rotacionales. Para hacer esta práctica puede utilizarse la siguiente máquina virtual:
 
+```
+https://drive.google.com/drive/folders/1kxqZcK0XIths62vo9PVrMvUabKerpQ-W?usp=sharing
+```
+
 También es posible utilizar otra máquina virtual o una instalación nativa de ubuntu que cumpla lo siguiente:
 
 * Ubuntu 24.04
