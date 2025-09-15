@@ -368,20 +368,19 @@ ros2 topic pub /pid_position_velocity_controller/reference control_msgs/msg/Mult
 !!! note annotate "Ejercicio"
 
     Tratar de ajustar correctamente las constantes del controlador PID para que el robot se posicione sin oscilaciones (probar que se alcance bien para distintas posiciones de referencia).
+    
+    Para hacer el ajuste de las constantes proporcional, derivativa e integral, si ya tienes cargado el controlador PID, puedes cambiar estas constantes mediante comandos como los siguientes (desde otra terminal):
+    
+    * Cambiar la ganancia P de joint1:
+    ```
+    ros2 param set /pid_position_velocity_controller gains.joint1.p 15.0
+    ```
+    * Cambiar la ganancia I de joint2:
+    ```
+    ros2 param set /pid_position_velocity_controller gains.joint2.i 0.2
+    ```
 
-
-Para hacer el ajuste de las constantes proporcional, derivativa e integral, si ya tienes cargado el controlador PID, puedes cambiar estas constantes mediante comandos como los siguientes (desde otra terminal):
-
-* Cambiar la ganancia P de joint1:
-```
-ros2 param set /pid_position_velocity_controller gains.joint1.p 15.0
-```
-* Cambiar la ganancia I de joint2:
-```
-ros2 param set /pid_position_velocity_controller gains.joint2.i 0.2
-```
-
-Por último, una forma de evaluar si el robot se está posicionando correctamente, es obtener una gráfica de la evolución de las articulaciones en los distintos experimentos. 
+    Por último, una forma de evaluar si el robot se está posicionando correctamente, es obtener una gráfica de la evolución de las articulaciones en los distintos experimentos. Una forma fácil de obtener las gráficas es usar una aplicación como plotjuggler. En esta aplicación se puede visualizar en tiempo real el estado de las articulaciones pulsando en start detro del apartado Streaming (ROS2 Topic Subscriber) y seleccionar /joint_states. La posición de las articulaciones pueden monitorizarse en joint_states/position.
 
 <!--
  Para ello, se puede utilizar ROS 2 + rqt_plot:
