@@ -380,7 +380,7 @@ ros2 topic pub /pid_position_velocity_controller/reference control_msgs/msg/Mult
     ros2 param set /pid_position_velocity_controller gains.joint2.i 0.2
     ```
 
-    Por último, una forma de evaluar si el robot se está posicionando correctamente, es obtener una gráfica de la evolución de las articulaciones en los distintos experimentos. Una forma fácil de obtener las gráficas es usar una aplicación como plotjuggler. En esta aplicación se puede visualizar en tiempo real el estado de las articulaciones pulsando en start detro del apartado Streaming (ROS2 Topic Subscriber) y seleccionar /joint_states. La posición de las articulaciones pueden monitorizarse en joint_states/position.
+    Por último, una forma de evaluar si el robot se está posicionando correctamente, es obtener una gráfica de la evolución de las articulaciones en los distintos experimentos. Una forma fácil de obtener las gráficas es usar una aplicación como plotjuggler. En esta aplicación se puede visualizar en tiempo real el estado de las articulaciones pulsando en start dentro del apartado Streaming (ROS2 Topic Subscriber) y seleccionar /joint_states. La posición de las articulaciones pueden monitorizarse en joint_states/position.
 
 <!--
  Para ello, se puede utilizar ROS 2 + rqt_plot:

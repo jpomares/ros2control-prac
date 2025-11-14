@@ -1463,23 +1463,101 @@ También es necesario actualizar las dependencias del paquete rrbot_controller. 
 ```
 <depend>pinocchio</depend>
 ```
-Y CMakeLists.txt:
+Además, habrá que actualizar CMakeLists.txt para añadir las dependencias a pinocchio y eigen3:
 ```
-find_package(pinocchio REQUIRED)
-```
-En el CMakeLists, añadir también pinocchio en ament_target_dependencies y en ament_export_dependencies.
+cmake_minimum_required(VERSION 3.5)
+project(rrbot_controller)
 
-Puede que también necesites incluir en CMakeLists los cambios necesarios debido a que pinocchio utiliza Eigen3. Para ello, primero añadir el siguiente código:
-```
+# Default to C++14
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+# find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(control_msgs REQUIRED)
+find_package(controller_interface REQUIRED)
+find_package(hardware_interface REQUIRED)
+find_package(pluginlib REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(realtime_tools REQUIRED)
+find_package(example_interfaces REQUIRED)
+
+find_package(pinocchio REQUIRED)
 find_package(Eigen3 REQUIRED NO_MODULE)
-```
-Luego, asegúrate de incluir los directorios de Eigen3 correctamente:
-```
-include_directories(${EIGEN3_INCLUDE_DIRS})
-```
-Y finalmente, añade la dependencia a tu target:
-```
-target_link_libraries(rrbot_controller ${EIGEN3_LIBRARIES})
+
+
+add_library(
+  rrbot_controller
+  SHARED
+  src/rrbot_controller.cpp
+)
+target_include_directories(
+  rrbot_controller
+  PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+ament_target_dependencies(
+  rrbot_controller
+  control_msgs
+  controller_interface
+  hardware_interface
+  pluginlib
+  rclcpp
+  rclcpp_lifecycle
+  realtime_tools
+)
+
+
+target_link_libraries(rrbot_controller
+  pinocchio::pinocchio
+  Eigen3::Eigen
+)
+
+# prevent pluginlib from using boost
+target_compile_definitions(rrbot_controller PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
+
+pluginlib_export_plugin_description_file(
+  controller_interface rrbot_controller.xml)
+
+install(
+  TARGETS
+  rrbot_controller
+  RUNTIME DESTINATION bin
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+)
+
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
+
+ament_export_include_directories(
+  include
+)
+ament_export_libraries(
+  rrbot_controller
+)
+ament_export_dependencies(
+  control_msgs
+  controller_interface
+  hardware_interface
+  pluginlib
+  rclcpp
+  rclcpp_lifecycle
+  realtime_tools
+  pinocchio
+  Eigen3
+)
+
+ament_package()
 ```
 
 ### Recompilar y probar el nuevo controlador
