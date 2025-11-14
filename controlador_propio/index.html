@@ -1,0 +1,2727 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../hardware/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Creación de un controlador propio - Ros2_control</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#creacion-de-nuevos-controladores" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Ros2_control" class="md-header__button md-logo" aria-label="Ros2_control" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ros2_control
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Creación de un controlador propio
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Ros2_control" class="md-nav__button md-logo" aria-label="Ros2_control" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Ros2_control
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción e instalación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ros2control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Los paquetes de ros2_control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conceptos_basicos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conceptos básicos de ros2_control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interfaz hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creación de un controlador propio
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creación de un controlador propio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduccion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controlador-propio-en-5-pasos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlador propio en 5 pasos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-un-paquete-para-el-controlador-personalizado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un paquete para el controlador personalizado
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#escribir-un-archivo-de-encabezado-hpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Escribir un archivo de encabezado .hpp
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Escribir un archivo de encabezado .hpp">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#definicion-del-archivo-fuente-del-controlador-cpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definición del archivo fuente del controlador .cpp
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Definición del archivo fuente del controlador .cpp">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-on_init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método on_init()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-on_configure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método on_configure()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Método on_configure()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-command_interface_configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método command_interface_configuration()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Método command_interface_configuration()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-state_interface_configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método state_interface_configuration()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Método state_interface_configuration()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-template-get_ordered_interfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método template get_ordered_interfaces()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-on_activate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método on_activate()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Método on_activate()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-on_deactivate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método on_deactivate()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método update()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Método update()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macro-pluginlib_export_class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macro PLUGINLIB_EXPORT_CLASS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#escribir-un-fichero-de-descripcion-del-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Escribir un fichero de descripción del plugin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Escribir un fichero de descripción del plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparar-los-ficheros-cmakeliststxt-y-packagexml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparar los ficheros CMakeLists.txt y package.xml
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparar los ficheros CMakeLists.txt y package.xml">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anadir-las-directivas-de-compilacion-necesarias-en-el-archivo-cmakeliststxt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Añadir las directivas de compilación necesarias en el archivo CMakeLists.txt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Añadir las directivas de compilación necesarias en el archivo CMakeLists.txt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anadir-las-dependencias-en-el-paquete-packagexml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Añadir las dependencias en el paquete package.xml
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-un-fichero-de-configuracion-del-controlador-para-el-controller-manager-yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un fichero de configuración del controlador para el Controller Manager (.yaml)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#actualizar-los-parametros-de-configuracion-del-plugin-de-gazebo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actualizar los parámetros de configuración del plugin de Gazebo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-un-nuevo-archivo-de-lanzamiento-para-generar-el-robot-y-ejecutar-el-nuevo-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un nuevo archivo de lanzamiento para generar el robot y ejecutar el nuevo controlador
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recompilar-y-probar-el-nuevo-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recompilar y probar el nuevo controlador
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementacion-de-un-controlador-pd-con-compensacion-de-gravedad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementación de un controlador PD con compensación de gravedad
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementación de un controlador PD con compensación de gravedad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recompilar-y-probar-el-nuevo-controlador_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recompilar y probar el nuevo controlador
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduccion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controlador-propio-en-5-pasos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlador propio en 5 pasos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-un-paquete-para-el-controlador-personalizado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un paquete para el controlador personalizado
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#escribir-un-archivo-de-encabezado-hpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Escribir un archivo de encabezado .hpp
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Escribir un archivo de encabezado .hpp">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#definicion-del-archivo-fuente-del-controlador-cpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definición del archivo fuente del controlador .cpp
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Definición del archivo fuente del controlador .cpp">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-on_init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método on_init()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-on_configure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método on_configure()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Método on_configure()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-command_interface_configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método command_interface_configuration()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Método command_interface_configuration()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-state_interface_configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método state_interface_configuration()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Método state_interface_configuration()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-template-get_ordered_interfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método template get_ordered_interfaces()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-on_activate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método on_activate()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Método on_activate()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-on_deactivate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método on_deactivate()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodo-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Método update()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Método update()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macro-pluginlib_export_class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macro PLUGINLIB_EXPORT_CLASS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#escribir-un-fichero-de-descripcion-del-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Escribir un fichero de descripción del plugin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Escribir un fichero de descripción del plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparar-los-ficheros-cmakeliststxt-y-packagexml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparar los ficheros CMakeLists.txt y package.xml
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparar los ficheros CMakeLists.txt y package.xml">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anadir-las-directivas-de-compilacion-necesarias-en-el-archivo-cmakeliststxt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Añadir las directivas de compilación necesarias en el archivo CMakeLists.txt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Añadir las directivas de compilación necesarias en el archivo CMakeLists.txt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicacion-del-codigo_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicación del código
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anadir-las-dependencias-en-el-paquete-packagexml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Añadir las dependencias en el paquete package.xml
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-un-fichero-de-configuracion-del-controlador-para-el-controller-manager-yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un fichero de configuración del controlador para el Controller Manager (.yaml)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#actualizar-los-parametros-de-configuracion-del-plugin-de-gazebo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actualizar los parámetros de configuración del plugin de Gazebo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-un-nuevo-archivo-de-lanzamiento-para-generar-el-robot-y-ejecutar-el-nuevo-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un nuevo archivo de lanzamiento para generar el robot y ejecutar el nuevo controlador
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recompilar-y-probar-el-nuevo-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recompilar y probar el nuevo controlador
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementacion-de-un-controlador-pd-con-compensacion-de-gravedad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementación de un controlador PD con compensación de gravedad
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementación de un controlador PD con compensación de gravedad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recompilar-y-probar-el-nuevo-controlador_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recompilar y probar el nuevo controlador
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="creacion-de-nuevos-controladores">Creación de nuevos controladores</h1>
+<p>Este apartado describe cómo escribir un nuevo controlador personalizado que toma señales de entrada y genera las señales de control enviadas a los actuadores utilizando ros2_control.</p>
+<h2 id="introduccion">Introduccion</h2>
+<p>Los controladores son el núcleo del sistema ros2_control. El paquete ros2_controllers incluye un conjunto de controladores estándar comunes y completos que satisfacen muchos casos de uso habituales. Algunos ejemplos de estos controladores son el controlador de esfuerzo, el controlador de trayectoria y el controlador de accionamiento diferencial, y la lista de controladores proporcionados crece con cada versión de ROS2. Sin embargo, si bien algunos controladores se pueden aplicar ampliamente a muchos tipos diferentes de aplicaciones robóticas, también es cierto que algunas aplicaciones también requieren controladores específicos, según la naturaleza y los requisitos de una aplicación.</p>
+<p>Afortunadamente, ros2_control es lo suficientemente flexible como para permitir crear controladores personalizados para ampliar su funcionalidad. De esta manera, también se puede usar ros2_control para resolver problemas de control más complejos sin demasiados problemas. En este apartado, se describirá cómo crear un controlador personalizado. </p>
+<h2 id="controlador-propio-en-5-pasos">Controlador propio en 5 pasos</h2>
+<p>Para implementar un nuevo controlador se deberán seguir los siguientes pasos:</p>
+<ul>
+<li>Crear un paquete para el controlador personalizado.</li>
+<li>Escribir un archivo de encabezado .hpp.</li>
+<li>Definir un archivo fuente el controlador .cpp.</li>
+<li>Preparar los archivos CMakeLists.txt y package.xml para la compilación.</li>
+<li>Registrar el controlador como un plugin.</li>
+</ul>
+<h2 id="crear-un-paquete-para-el-controlador-personalizado">Crear un paquete para el controlador personalizado</h2>
+<p>Como es habitual, el enfoque recomendado es configurar un nuevo paquete para mantener nuestro nuevo controlador modular e intercambiable.</p>
+<p>Primero, ir al directorio src dentro de ros2_ws:</p>
+<div class="highlight"><pre><span></span><code>cd ~/ros2_ws/src
+</code></pre></div>
+<p>Ahora crea el nuevo paquete. Este nuevo paquete debe tener ament_cmake como tipo de compilación y, como práctica recomendada, se sugiere terminar el nombre del nuevo paquete con "_controller". También se necesitarán unas cuantas dependencias:</p>
+<ul>
+<li>control_msgs</li>
+<li>controller_interface</li>
+<li>hardware_interface</li>
+<li>pluginlib</li>
+<li>rclcpp</li>
+<li>rclcpp_lifecycle</li>
+<li>realtime_tools</li>
+<li>example_interfaces</li>
+</ul>
+<p>Ejecutar el siguiente comando:</p>
+<p><div class="highlight"><pre><span></span><code>ros2 pkg create --build-type=ament_cmake rrbot_controller --dependencies control_msgs controller_interface hardware_interface pluginlib rclcpp rclcpp_lifecycle realtime_tools example_interfaces
+</code></pre></div>
+El directorio del nuevo paquete ahora debería tener un archivo CMakeLists.txt y un archivo package.xml y un directorio src y un directorio include/rrbot_controller.</p>
+<h2 id="escribir-un-archivo-de-encabezado-hpp">Escribir un archivo de encabezado .hpp</h2>
+<p>Ahora, dentro de la carpeta include/rrbot_controller, crear un archivo llamado rrbot_controller.hpp.</p>
+<div class="highlight"><pre><span></span><code>touch ~/ros2_ws/src/rrbot_controller/include/rrbot_controller/rrbot_controller.hpp
+</code></pre></div>
+<p>Luego añadir el siguiente fragmento de código en ese archivo:</p>
+<div class="highlight"><pre><span></span><code>// Copyright (c) 2021, Bence Magyar and Denis Stogl
+//
+// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef RRBOT_CONTROLLER__RRBOT_CONTROLLER_HPP_
+#define RRBOT_CONTROLLER__RRBOT_CONTROLLER_HPP_
+
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+#include &quot;controller_interface/controller_interface.hpp&quot;
+#include &quot;rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp&quot;
+#include &quot;rclcpp_lifecycle/state.hpp&quot;
+#include &quot;realtime_tools/realtime_buffer.hpp&quot;
+#include &quot;realtime_tools/realtime_publisher.hpp&quot;
+
+#include &quot;control_msgs/msg/joint_controller_state.hpp&quot;
+#include &quot;control_msgs/msg/joint_jog.hpp&quot;
+
+namespace rrbot_controller {
+using CallbackReturn =
+    rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
+
+class RRBotController : public controller_interface::ControllerInterface {
+public:
+  RRBotController();
+
+  CallbackReturn on_init() override;
+
+  controller_interface::InterfaceConfiguration
+  command_interface_configuration() const override;
+
+  controller_interface::InterfaceConfiguration
+  state_interface_configuration() const override;
+
+  CallbackReturn
+  on_configure(const rclcpp_lifecycle::State &amp;previous_state) override;
+
+  CallbackReturn
+  on_activate(const rclcpp_lifecycle::State &amp;previous_state) override;
+
+  CallbackReturn
+  on_deactivate(const rclcpp_lifecycle::State &amp;previous_state) override;
+
+  controller_interface::return_type
+  update(const rclcpp::Time &amp;time, const rclcpp::Duration &amp;period) override;
+
+protected:
+  std::vector&lt;std::string&gt; joint_names_;
+  std::string interface_name_;
+
+  // Command subscribers and Controller State publisher
+  using ControllerCommandMsg = control_msgs::msg::JointJog;
+
+  rclcpp::Subscription&lt;ControllerCommandMsg&gt;::SharedPtr command_subscriber_ =
+      nullptr;
+  realtime_tools::RealtimeBuffer&lt;std::shared_ptr&lt;ControllerCommandMsg&gt;&gt;
+      input_command_;
+
+  using ControllerStateMsg = control_msgs::msg::JointControllerState;
+  using ControllerStatePublisher =
+      realtime_tools::RealtimePublisher&lt;ControllerStateMsg&gt;;
+
+  rclcpp::Publisher&lt;ControllerStateMsg&gt;::SharedPtr s_publisher_;
+  std::unique_ptr&lt;ControllerStatePublisher&gt; state_publisher_;
+};
+
+} // namespace rrbot_controller
+
+#endif // RRBOT_CONTROLLER__RRBOT_CONTROLLER_HPP_
+</code></pre></div>
+<h3 id="explicacion-del-codigo">Explicación del código</h3>
+<p>A continuación se va a describir este código por trozos.
+<div class="highlight"><pre><span></span><code>#ifndef RRBOT_CONTROLLER__RRBOT_CONTROLLER_HPP_
+#define RRBOT_CONTROLLER__RRBOT_CONTROLLER_HPP_
+</code></pre></div>
+Este código de encabezado asegura que no se incluya más de una vez.</p>
+<div class="highlight"><pre><span></span><code>#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+#include &quot;controller_interface/controller_interface.hpp&quot;
+#include &quot;rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp&quot;
+#include &quot;rclcpp_lifecycle/state.hpp&quot;
+#include &quot;realtime_tools/realtime_buffer.h&quot;
+#include &quot;realtime_tools/realtime_publisher.h&quot;
+// #include &quot;rrbot_controller/visibility_control.h&quot;
+
+#include &quot;control_msgs/msg/joint_controller_state.hpp&quot;
+#include &quot;control_msgs/msg/joint_jog.hpp&quot;
+</code></pre></div>
+<p>Se utilizan las directivas #include para incluir el contenido de los archivos especificados en el compilador.</p>
+<div class="highlight"><pre><span></span><code>using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
+</code></pre></div>
+<p>Esto nos permitirá usar las formas abreviadas CallbackReturn::SUCCESS y CallbackReturn::ERROR en lugar del nombre de espacio de nombres completo rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS más adelante en el código.
+<div class="highlight"><pre><span></span><code>namespace rrbot_controller
+</code></pre></div>
+Esto permite poner nuestra implementación en un espacio de nombres que coincida con el nombre del paquete.
+<div class="highlight"><pre><span></span><code>class RRBotController : public controller_interface::ControllerInterface
+</code></pre></div>
+Aquí solo estamos declarando la clase RRBotController, que hereda de la clase controller_interface::ControllerInterface. Esta última es la clase de la que todo controlador personalizado debe heredar para poder ser construido correctamente.</p>
+<div class="highlight"><pre><span></span><code>public:
+  RRBotController();
+
+  CallbackReturn on_init() override;
+
+  controller_interface::InterfaceConfiguration
+  command_interface_configuration() const override;
+
+  controller_interface::InterfaceConfiguration
+  state_interface_configuration() const override;
+
+  CallbackReturn
+  on_configure(const rclcpp_lifecycle::State &amp;previous_state) override;
+
+  CallbackReturn
+  on_activate(const rclcpp_lifecycle::State &amp;previous_state) override;
+
+  CallbackReturn
+  on_deactivate(const rclcpp_lifecycle::State &amp;previous_state) override;
+
+  controller_interface::return_type
+  update(const rclcpp::Time &amp;time, const rclcpp::Duration &amp;period) override;
+</code></pre></div>
+<p>Después, debemos declarar estos métodos públicos, que son los que cualquier controlador personalizado debe implementar o sobrescribir en el archivo .cpp.</p>
+<p>Explicaremos cada uno de estos métodos en un momento, cuando los implementemos en el código.</p>
+<p><div class="highlight"><pre><span></span><code>protected:
+  std::vector&lt;std::string&gt; joint_names_;
+  std::string interface_name_;
+
+  // Command subscribers and Controller State publisher
+  using ControllerCommandMsg = control_msgs::msg::JointJog;
+
+  rclcpp::Subscription&lt;ControllerCommandMsg&gt;::SharedPtr command_subscriber_ =
+      nullptr;
+  realtime_tools::RealtimeBuffer&lt;std::shared_ptr&lt;ControllerCommandMsg&gt;&gt;
+      input_command_;
+
+  using ControllerStateMsg = control_msgs::msg::JointControllerState;
+  using ControllerStatePublisher =
+      realtime_tools::RealtimePublisher&lt;ControllerStateMsg&gt;;
+
+  rclcpp::Publisher&lt;ControllerStateMsg&gt;::SharedPtr s_publisher_;
+  std::unique_ptr&lt;ControllerStatePublisher&gt; state_publisher_;
+</code></pre></div>
+Finalmente, declaramos las variables que necesitaremos para este controlador, así como un objeto suscriptor y un objeto publicador.</p>
+<h2 id="definicion-del-archivo-fuente-del-controlador-cpp">Definición del archivo fuente del controlador .cpp</h2>
+<p>A continuación tenemos que agregar el archivo fuente correspondiente dentro de la carpeta src del paquete y definir todos los métodos que acabamos de declarar en el archivo de encabezado.</p>
+<p>Dentro de la carpeta src , crear un archivo llamado rrbot_controller.cpp:</p>
+<div class="highlight"><pre><span></span><code>touch ~/ros2_ws/src/rrbot_controller/src/rrbot_controller.cpp
+</code></pre></div>
+<p>Luego agregar el siguiente fragmento de código en ese archivo:</p>
+<div class="highlight"><pre><span></span><code>// Copyright (c) 2021, Bence Magyar and Denis Stogl
+//
+// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include &quot;rrbot_controller/rrbot_controller.hpp&quot;
+
+#include &lt;limits&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+namespace rrbot_controller
+{
+RRBotController::RRBotController() : controller_interface::ControllerInterface() {}
+
+// All the methods added must be inside this namespace
+
+}  // namespace rrbot_controller
+</code></pre></div>
+<p>Guardar el archivo. En los siguientes apartados se irán implementando las funciones necesarias dentro de este código.</p>
+<h3 id="explicacion-del-codigo_1">Explicación del código</h3>
+<p>En primer lugar se definen las librerías necesarias y el espacio de nombres que encierra esta clase:</p>
+<div class="highlight"><pre><span></span><code>#include &quot;rrbot_controller/rrbot_controller.hpp&quot;
+
+#include &lt;limits&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+</code></pre></div>
+<p>Luego agregamos la definición del espacio de nombres que encierra la implementación de los métodos RRBotController de la clase:</p>
+<div class="highlight"><pre><span></span><code>namespace rrbot_controller
+{
+RRBotController::RRBotController() : controller_interface::ControllerInterface() {}
+
+// All the methods added must be inside this namespace
+
+}  // namespace rrbot_controller
+</code></pre></div>
+<p>Tener en cuenta que todos los métodos que agregaremos a este archivo deben ubicarse dentro de este espacio de nombres. La última llave de cierre indica el final del espacio de nombres.</p>
+<h3 id="metodo-on_init">Método on_init()</h3>
+<p>Durante la etapa de inicialización, declaramos todos los parámetros que aceptaremos durante la vida útil del controlador. Esto se hace para que el tipo y el nombre del parámetro estén bien definidos en el momento del inicio, lo que reduce las posibilidades de una configuración incorrecta más adelante.</p>
+<p>Para continuar con el controlador de la sección anterior, copia y pega el código que se muestra a continuación en el archivo rrbot_controller.cpp. Asegúrate de pegarlo dentro de los corchetes del espacio de nombres.</p>
+<div class="highlight"><pre><span></span><code>CallbackReturn RRBotController::on_init() {
+  try {
+    auto_declare(&quot;joints&quot;, std::vector&lt;std::string&gt;());
+    auto_declare(&quot;interface_name&quot;, std::string());
+  } catch (const std::exception &amp;e) {
+    fprintf(stderr, &quot;Exception thrown during init stage with message: %s \n&quot;,
+            e.what());
+    return CallbackReturn::ERROR;
+  }
+
+  return CallbackReturn::SUCCESS;
+}
+</code></pre></div>
+<p>Rodeamos el código con un bloque try/catch para poder notificar al administrador del controlador si ocurre algún problema al procesar el método on_init(). En este ejemplo, on_init() ejecuta la declaración de los parámetros que este controlador requerirá y leerá del archivo de configuración del controlador. Si hay algún error en este segmento de código, este método devolverá un error y la máquina de estados del administrador del controlador cambiará a "finalizado".
+Si todo sale bien, devolvemos CallbackReturn::SUCCESS.</p>
+<h3 id="metodo-on_configure">Método on_configure()</h3>
+<p>El método on_configure() se utiliza para leer los valores de los parámetros y declarar los suscriptores y publicadores necesarios. Este método se ejecuta antes de la llamada al método update y garantiza que, una vez que el algoritmo de control entre en acción, todo esté configurado y listo para funcionar.</p>
+<p>Este es el código C++ que implmenta el template para on_configure(). Añadirlo al código fuente del controlador:
+<div class="highlight"><pre><span></span><code>CallbackReturn RRBotController::on_configure(
+    const rclcpp_lifecycle::State &amp; /*previous_state*/) {
+  auto error_if_empty = [&amp;](const auto &amp;parameter, const char *parameter_name) {
+    if (parameter.empty()) {
+      RCLCPP_ERROR(get_node()-&gt;get_logger(), &quot;&#39;%s&#39; parameter was empty&quot;,
+                   parameter_name);
+      return true;
+    }
+    return false;
+  };
+
+  auto get_string_array_param_and_error_if_empty =
+      [&amp;](std::vector&lt;std::string&gt; &amp;parameter, const char *parameter_name) {
+        parameter = get_node()-&gt;get_parameter(parameter_name).as_string_array();
+        return error_if_empty(parameter, parameter_name);
+      };
+
+  auto get_string_param_and_error_if_empty =
+  [&amp;](std::string &amp;parameter, const char *parameter_name) {
+    parameter = get_node()-&gt;get_parameter(parameter_name).as_string();
+    return error_if_empty(parameter, parameter_name);
+  };
+
+  if (
+    get_string_array_param_and_error_if_empty(joint_names_, &quot;joints&quot;) ||
+      get_string_param_and_error_if_empty(interface_name_, &quot;interface_name&quot;)) {
+    return CallbackReturn::ERROR;
+  }
+
+  // Command Subscriber and callbacks
+  auto callback_command =
+      [&amp;](const std::shared_ptr&lt;ControllerCommandMsg&gt; msg) -&gt; void {
+    if (msg-&gt;joint_names.size() == joint_names_.size()) {
+      input_command_.writeFromNonRT(msg);
+    } else {
+      RCLCPP_ERROR(get_node()-&gt;get_logger(),
+                   &quot;Received %zu , but expected %zu joints in command. &quot;
+                   &quot;Ignoring message.&quot;,
+                   msg-&gt;joint_names.size(), joint_names_.size());
+    }
+  };
+  command_subscriber_ = get_node()-&gt;create_subscription&lt;ControllerCommandMsg&gt;(
+      &quot;~/commands&quot;, rclcpp::SystemDefaultsQoS(), callback_command);
+
+  // State publisher
+  s_publisher_ =
+  get_node()-&gt;create_publisher&lt;ControllerStateMsg&gt;(
+      &quot;~/state&quot;, rclcpp::SystemDefaultsQoS());
+  state_publisher_ = std::make_unique&lt;ControllerStatePublisher&gt;(s_publisher_);
+
+  state_publisher_-&gt;lock();
+  state_publisher_-&gt;msg_.header.frame_id = joint_names_[0];
+  state_publisher_-&gt;unlock();
+
+  RCLCPP_INFO_STREAM(get_node()-&gt;get_logger(), &quot;configure successful&quot;);
+  return CallbackReturn::SUCCESS;
+}
+</code></pre></div></p>
+<h4 id="explicacion-del-codigo_2">Explicación del código</h4>
+<p><div class="highlight"><pre><span></span><code>  auto error_if_empty = [&amp;](const auto &amp; parameter, const char * parameter_name) {
+    if (parameter.empty()) {
+      RCLCPP_ERROR(get_node()-&gt;get_logger(), &quot;&#39;%s&#39; parameter was empty&quot;, parameter_name);
+      return true;
+    }
+    return false;
+  };
+</code></pre></div>
+En la primera parte del método on_configure(), declaramos una función lambda para verificar si hay parámetros vacíos y devolver un valor booleano.
+<div class="highlight"><pre><span></span><code>  auto get_string_array_param_and_error_if_empty =
+    [&amp;](std::vector&lt;std::string&gt; &amp; parameter, const char * parameter_name) {
+      parameter = get_node()-&gt;get_parameter(parameter_name).as_string_array();
+      return error_if_empty(parameter, parameter_name);
+    };
+</code></pre></div>
+A continuación, declaramos una segunda función lambda para recuperar una cadena de parámetros y verificar si el array de parámetros está vacío, utilizando la primera función lambda declarada anteriormente.
+<div class="highlight"><pre><span></span><code>  auto get_string_param_and_error_if_empty =
+    [&amp;](std::string &amp; parameter, const char * parameter_name) {
+      parameter = get_node()-&gt;get_parameter(parameter_name).as_string();
+      return error_if_empty(parameter, parameter_name);
+    };
+</code></pre></div>
+Después de eso, declaramos una tercera función lambda para recuperar un parámetro de tipo cadena y realizar la verificación de vacío, la cual también devuelve un valor booleano.
+<div class="highlight"><pre><span></span><code>  if (
+    get_string_array_param_and_error_if_empty(joint_names_, &quot;joints&quot;) ||
+    get_string_param_and_error_if_empty(interface_name_, &quot;interface_name&quot;)) {
+    return CallbackReturn::ERROR;
+  }
+</code></pre></div>
+En el código anteriorse llama a la segunda y tercera función lambda para evaluar si el array de parámetros "joints" y el parámetro "interface" están vacíos, en cuyo caso el método on_configure() devuelve CallbackReturn::ERROR.
+<div class="highlight"><pre><span></span><code>  // Command Subscriber and callbacks
+  auto callback_command = [&amp;](const std::shared_ptr&lt;ControllerCommandMsg&gt; msg) -&gt; void {
+    if (msg-&gt;joint_names.size() == joint_names_.size()) {
+      input_command_.writeFromNonRT(msg);
+    } else {
+      RCLCPP_ERROR(
+        get_node()-&gt;get_logger(),
+        &quot;Received %zu , but expected %zu joints in command. Ignoring message.&quot;,
+        msg-&gt;joint_names.size(), joint_names_.size());
+    }
+  };
+  command_subscriber_ = get_node()-&gt;create_subscription&lt;ControllerCommandMsg&gt;(
+    &quot;~/commands&quot;, rclcpp::SystemDefaultsQoS(), callback_command);
+</code></pre></div>
+En la segunda parte del on_configure() mostrada anteriormente, declaramos una función lambda como la función de devolución de llamada para el comando y declaramos un objeto suscriptor de comandos.
+<div class="highlight"><pre><span></span><code>  // State publisher
+  s_publisher_ =
+    get_node()-&gt;create_publisher&lt;ControllerStateMsg&gt;(&quot;~/state&quot;, rclcpp::SystemDefaultsQoS());
+  state_publisher_ = std::make_unique&lt;ControllerStatePublisher&gt;(s_publisher_);
+
+  state_publisher_-&gt;lock();
+  state_publisher_-&gt;msg_.header.frame_id = joint_names_[0];
+  state_publisher_-&gt;unlock();
+</code></pre></div>
+A continuación, declaramos un publicador para transmitir los estados de las articulaciones y lo convertimos en un puntero único. Las últimas tres líneas anteriores se utilizan para evitar que múltiples hilos accedan al mensaje publicado al mismo tiempo, mientras se establece el valor del frame_id en el encabezado.
+<div class="highlight"><pre><span></span><code>  RCLCPP_INFO_STREAM(get_node()-&gt;get_logger(), &quot;configure successful&quot;);
+  return CallbackReturn::SUCCESS;
+</code></pre></div>
+Al finalizar, el método on_configure() informa al usuario sobre su finalización exitosa y devuelve CallbackReturn::SUCCESS.</p>
+<h3 id="metodo-command_interface_configuration">Método command_interface_configuration()</h3>
+<p>En este método se define las interfaces de comando necesarias.</p>
+<p>Añadir el siguiente bloque de código al archivo rrbot_controller.cpp dentro del espacio de nombres:</p>
+<div class="highlight"><pre><span></span><code>controller_interface::InterfaceConfiguration RRBotController::command_interface_configuration()
+  const
+{
+  controller_interface::InterfaceConfiguration command_interfaces_config;
+  command_interfaces_config.type = controller_interface::interface_configuration_type::INDIVIDUAL;
+
+  command_interfaces_config.names.reserve(joint_names_.size());
+  for (const auto &amp; joint : joint_names_) {
+    command_interfaces_config.names.push_back(joint + &quot;/&quot; + interface_name_);
+  }
+
+  return command_interfaces_config;
+}
+</code></pre></div>
+<h4 id="explicacion-del-codigo_3">Explicación del código</h4>
+<div class="highlight"><pre><span></span><code>  controller_interface::InterfaceConfiguration command_interfaces_config;
+  command_interfaces_config.type = controller_interface::interface_configuration_type::INDIVIDUAL;
+</code></pre></div>
+<p>Primero se crea un nuevo objeto InterfaceConfiguration y se establece el tipo como INDIVIDUAL. Hay tres opciones para la configuración de la interfaz: ALL, INDIVIDUAL y NONE. ALL y NONE solicitarán acceso a todas las interfaces disponibles o a ninguna de ellas. La configuración INDIVIDUAL necesita una lista detallada de los nombres de las interfaces requeridas. Normalmente, estos se proporcionan como parámetros.
+La llamada anterior reservará espacio de memoria para el vector de nombres de interfaces.
+<div class="highlight"><pre><span></span><code>  command_interfaces_config.names.reserve(joint_names_.size());
+  for (const auto &amp; joint : joint_names_) {
+    command_interfaces_config.names.push_back(joint + &quot;/&quot; + interface_name_);
+  }
+</code></pre></div>
+En el bloque anterior, la primera línea reserva espacio de memoria para el vector de nombres de interfaces.</p>
+<p>Luego, a cada articulación se le asigna su propio nombre de interfaz, que se guarda dentro de command_interfaces_config.names. Un nombre de interfaz completo debe tener la estructura <nombre_de_articulación>/<tipo_de_interfaz>.</p>
+<h3 id="metodo-state_interface_configuration">Método state_interface_configuration()</h3>
+<p>Este método cumple una función similar a la del método anterior, con la diferencia de que este se utiliza para definir qué interfaces de sensores de hardware son requeridas por el controlador.</p>
+<p>Añadir el siguiente código a rrbot_controller.cpp:</p>
+<div class="highlight"><pre><span></span><code>controller_interface::InterfaceConfiguration RRBotController::state_interface_configuration() const
+{
+  controller_interface::InterfaceConfiguration state_interfaces_config;
+  state_interfaces_config.type = controller_interface::interface_configuration_type::INDIVIDUAL;
+
+  state_interfaces_config.names.reserve(joint_names_.size());
+  for (const auto &amp; joint : joint_names_) {
+    state_interfaces_config.names.push_back(joint + &quot;/&quot; + interface_name_);
+  }
+
+  return state_interfaces_config;
+}
+</code></pre></div>
+<h4 id="explicacion-del-codigo_4">Explicación del código</h4>
+<div class="highlight"><pre><span></span><code>  controller_interface::InterfaceConfiguration state_interfaces_config;
+  state_interfaces_config.type = controller_interface::interface_configuration_type::INDIVIDUAL;
+</code></pre></div>
+<p>De nuevo se crea un nuevo objeto InterfaceConfiguration y se establece el tipo como INDIVIDUAL.
+<div class="highlight"><pre><span></span><code>state_interfaces_config.names.reserve(joint_names_.size());
+</code></pre></div>
+Luego, reservamos memoria para el tamaño de la interfaz.
+<div class="highlight"><pre><span></span><code>  for (const auto &amp; joint : joint_names_) {
+    state_interfaces_config.names.push_back(joint + &quot;/&quot; + interface_name_);
+  }
+</code></pre></div></p>
+<p>Este es un procedimiento estándar para almacenar los nombres de las articulaciones desde archivos de configuración .yaml, así que este método no cambiará mucho en otra implementación personalizada de un controlador.</p>
+<h3 id="metodo-template-get_ordered_interfaces">Método template get_ordered_interfaces()</h3>
+<p>A continuación agregar la función template get_ordered_interfaces() que se muestra a continuación al final del método state_interface_configuration() que agregaste anteriormente.
+<div class="highlight"><pre><span></span><code>template &lt;typename T&gt;
+bool get_ordered_interfaces(
+  std::vector&lt;T&gt; &amp; unordered_interfaces, const std::vector&lt;std::string&gt; &amp; joint_names,
+  const std::string &amp; interface_type, std::vector&lt;std::reference_wrapper&lt;T&gt;&gt; &amp; ordered_interfaces)
+{
+  for (const auto &amp; joint_name : joint_names) {
+    for (auto &amp; command_interface : unordered_interfaces) {
+      if (
+        (command_interface.get_name() == joint_name) &amp;&amp;
+        (command_interface.get_interface_name() == interface_type)) {
+        ordered_interfaces.push_back(std::ref(command_interface));
+      }
+    }
+  }
+
+  return joint_names.size() == ordered_interfaces.size();
+}
+</code></pre></div>
+Esta función template recibe como argumento un vector desordenado de interfaces y lo convierte en un vector ordenado. Es necesario incluir ordered_interfaces con referencias a las interfaces que coinciden, en el mismo orden que en joint_names.</p>
+<h3 id="metodo-on_activate">Método on_activate()</h3>
+<p>Se utiliza el método on_activate() para declarar un mensaje de comando y establecer el valor predeterminado para el comando (copiar y pegar este código como en casos anteriores).</p>
+<div class="highlight"><pre><span></span><code>CallbackReturn RRBotController::on_activate(const rclcpp_lifecycle::State &amp; /*previous_state*/)
+{
+  // Set default value in command
+  std::shared_ptr&lt;ControllerCommandMsg&gt; msg = std::make_shared&lt;ControllerCommandMsg&gt;();
+  msg-&gt;joint_names = joint_names_;
+  msg-&gt;displacements.resize(joint_names_.size(), std::numeric_limits&lt;double&gt;::quiet_NaN());
+  input_command_.writeFromNonRT(msg);
+
+  return CallbackReturn::SUCCESS;
+}
+</code></pre></div>
+<h4 id="explicacion-del-codigo_5">Explicación del código</h4>
+<p><div class="highlight"><pre><span></span><code>  // Set default value in command
+  std::shared_ptr&lt;ControllerCommandMsg&gt; msg = std::make_shared&lt;ControllerCommandMsg&gt;();
+  msg-&gt;joint_names = joint_names_;
+  msg-&gt;displacements.resize(joint_names_.size(), std::numeric_limits&lt;double&gt;::quiet_NaN());
+</code></pre></div>
+Arriba declaramos un mensaje utilizando el tipo de dato ControllerCommandMsg, se completa el campo joint_names en el mensaje y se establece el valor predeterminado en el comando al valor especial "quiet not-a-number", que tiene un significado específico para los tipos de punto flotante.
+<div class="highlight"><pre><span></span><code>  input_command_.writeFromNonRT(msg);
+</code></pre></div>
+Aquí se usa writeFromNonRT, que se puede utilizar en tiempo real (RT), si tenemos la garantía de que:</p>
+<ul>
+<li>Ningún hilo no-RT está llamando a la misma función (no estamos suscribiéndonos a callbacks de ROS).</li>
+<li>Solo hay un único hilo RT.</li>
+</ul>
+<h3 id="metodo-on_deactivate">Método on_deactivate()</h3>
+<p>Copiar y pegar el sigiente código que implementa el método on_deactivate:
+<div class="highlight"><pre><span></span><code>CallbackReturn RRBotController::on_deactivate(const rclcpp_lifecycle::State &amp; /*previous_state*/)
+{
+  return CallbackReturn::SUCCESS;
+}
+</code></pre></div>
+Lo único que se se hace aquí es devolver CallbackReturn::SUCCESS cuando se llame al método.</p>
+<h3 id="metodo-update">Método update()</h3>
+<p>La función update() se llama en el bucle de control para generar un comando de control para el hardware. Para implementar el método update(), pega el siguiente código al final del archivo pero dentro del espacio de nombres:
+<div class="highlight"><pre><span></span><code>controller_interface::return_type
+RRBotController::update(const rclcpp::Time &amp;time,
+                        const rclcpp::Duration &amp; /*period*/) {
+  auto current_command = input_command_.readFromRT();
+
+  for (size_t i = 0; i &lt; command_interfaces_.size(); ++i) {
+    if (!std::isnan((*current_command)-&gt;displacements[i])) {
+        if (!command_interfaces_[i].set_value((*current_command)-&gt;displacements[i])){
+            RCLCPP_ERROR(
+                get_node()-&gt;get_logger(), 
+                &quot;Failed to set command interface value for joint %zu&quot;, 
+                i
+            );
+            return controller_interface::return_type::ERROR;
+        }
+    }
+  }
+
+  if (state_publisher_ &amp;&amp; state_publisher_-&gt;trylock()) {
+    state_publisher_-&gt;msg_.header.stamp = time;
+    state_publisher_-&gt;msg_.set_point = command_interfaces_[0].get_value();
+
+    state_publisher_-&gt;unlockAndPublish();
+  }
+
+  return controller_interface::return_type::OK;
+}
+</code></pre></div></p>
+<h4 id="explicacion-del-codigo_6">Explicación del código</h4>
+<p><div class="highlight"><pre><span></span><code>auto current_command = input_command_.readFromRT();
+</code></pre></div>
+Aquí se obtiene un puntero de datos con readFromRT()
+<div class="highlight"><pre><span></span><code>  for (size_t i = 0; i &lt; command_interfaces_.size(); ++i) {
+    if (!std::isnan((*current_command)-&gt;displacements[i])) {
+        if (!command_interfaces_[i].set_value((*current_command)-&gt;displacements[i])){
+            RCLCPP_ERROR(
+                get_node()-&gt;get_logger(), 
+                &quot;Failed to set command interface value for joint %zu&quot;, 
+                i
+            );
+            return controller_interface::return_type::ERROR;
+        }
+    }
+  }
+</code></pre></div>
+Para cada articulación, se establece como valor de la acción de control los datos no modificados que están dentro del vector de desplazamientos.
+<div class="highlight"><pre><span></span><code>  if (state_publisher_ &amp;&amp; state_publisher_-&gt;trylock()) {
+    state_publisher_-&gt;msg_.header.stamp = get_node()-&gt;now();
+    state_publisher_-&gt;msg_.set_point = command_interfaces_[0].get_value();
+
+    state_publisher_-&gt;unlockAndPublish();
+  }
+</code></pre></div>
+Este ejemplo está implementando un controlador Forward command controller para un conjunto de articulaciones. Básicamente, reenvía como señal de control el valor pasado como consigna.</p>
+<h3 id="macro-pluginlib_export_class">macro PLUGINLIB_EXPORT_CLASS</h3>
+<p>Después de cerrar el espacio de nombres, hay que añadir una llamada a la macro PLUGINLIB_EXPORT_CLASS al final del archivo .cpp. Agregar el siguiente bloque de código al final de tu archivo de código fuente, después de que se cierre el espacio de nombres:
+<div class="highlight"><pre><span></span><code>#include &quot;pluginlib/class_list_macros.hpp&quot;
+
+PLUGINLIB_EXPORT_CLASS(rrbot_controller::RRBotController, controller_interface::ControllerInterface)
+</code></pre></div>
+Esta macro sirve para registrar este controlador dentro del sistema de plugins de ROS2.</p>
+<h2 id="escribir-un-fichero-de-descripcion-del-plugin">Escribir un fichero de descripción del plugin</h2>
+<p>El siguiente paso es escribir un archivo de definición de exportación para Pluginlib, tal como se hace cuando se crea cualquier otro plugin de Pluginlib.
+Crear un nuevo archivo llamado rrbot_controller.xml en el directorio raíz del paquete donde se encuentra el archivo CMakeLists.txt:
+<div class="highlight"><pre><span></span><code>touch ~/ros2_ws/src/rrbot_controller/rrbot_controller.xml
+</code></pre></div>
+Este será el contenido del xml:
+<div class="highlight"><pre><span></span><code>&lt;library path=&quot;rrbot_controller&quot;&gt;
+  &lt;class name=&quot;rrbot_controller/RRBotController&quot;
+         type=&quot;rrbot_controller::RRBotController&quot; base_class_type=&quot;controller_interface::ControllerInterface&quot;&gt;
+  &lt;description&gt;
+    RRBotController ros2_control controller.
+  &lt;/description&gt;
+  &lt;/class&gt;
+&lt;/library&gt;
+</code></pre></div>
+Guardar el contenido y seguir con el siguiente paso.</p>
+<h4 id="explicacion-del-codigo_7">Explicación del código</h4>
+<p>El elemento <library> especifica la ruta relativa a la biblioteca que contiene el complemento que se desea exportar. En este caso, es rrbot_controller.</p>
+<p>La etiqueta <class...> declara el complemento que se quiere exportar. Los parámetros son los siguientes:</p>
+<ul>
+<li>name: nombre del complemento de ROS2_control.</li>
+<li>type: espacio de nombres y el nombre de la clase que implementa el complemento.</li>
+<li>base_class_type: espacio de nombres y nombre de la clase base de la que hereda este complemento.
+La etiqueta anidada <description> encierra una descripción del complemento y su funcionalidad.</li>
+</ul>
+<p>Nota: El archivo XML del complemento debe declarar todos los complementos contenidos en un paquete. En este caso, solo hay uno.</p>
+<h2 id="preparar-los-ficheros-cmakeliststxt-y-packagexml">Preparar los ficheros CMakeLists.txt y package.xml</h2>
+<h3 id="anadir-las-directivas-de-compilacion-necesarias-en-el-archivo-cmakeliststxt">Añadir las directivas de compilación necesarias en el archivo CMakeLists.txt</h3>
+<p>Este paso agrega las directivas de compilación necesarias en CMakeLists.txt, que son requeridas para compilar el paquete.</p>
+<p>El archivo CMakeLists.txt final debería ser el siguiente:
+<div class="highlight"><pre><span></span><code>cmake_minimum_required(VERSION 3.5)
+project(rrbot_controller)
+
+# Default to C++14
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES &quot;Clang&quot;)
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+# find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(control_msgs REQUIRED)
+find_package(controller_interface REQUIRED)
+find_package(hardware_interface REQUIRED)
+find_package(pluginlib REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(realtime_tools REQUIRED)
+find_package(example_interfaces REQUIRED)
+
+add_library(
+  rrbot_controller
+  SHARED
+  src/rrbot_controller.cpp
+)
+target_include_directories(
+  rrbot_controller
+  PUBLIC
+  $&lt;BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include&gt;
+  $&lt;INSTALL_INTERFACE:include&gt;
+)
+ament_target_dependencies(
+  rrbot_controller
+  control_msgs
+  controller_interface
+  hardware_interface
+  pluginlib
+  rclcpp
+  rclcpp_lifecycle
+  realtime_tools
+)
+# prevent pluginlib from using boost
+target_compile_definitions(rrbot_controller PUBLIC &quot;PLUGINLIB__DISABLE_BOOST_FUNCTIONS&quot;)
+
+pluginlib_export_plugin_description_file(
+  controller_interface rrbot_controller.xml)
+
+install(
+  TARGETS
+  rrbot_controller
+  RUNTIME DESTINATION bin
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+)
+
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
+
+ament_export_include_directories(
+  include
+)
+ament_export_libraries(
+  rrbot_controller
+)
+ament_export_dependencies(
+  control_msgs
+  controller_interface
+  hardware_interface
+  pluginlib
+  rclcpp
+  rclcpp_lifecycle
+  realtime_tools
+)
+
+ament_package()
+</code></pre></div></p>
+<h4 id="explicacion-del-codigo_8">Explicación del código</h4>
+<p><div class="highlight"><pre><span></span><code>add_library(
+  rrbot_controller
+  SHARED
+  src/rrbot_controller.cpp
+)
+
+target_include_directories(
+  rrbot_controller
+  PUBLIC
+  $&lt;BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include&gt;
+  $&lt;INSTALL_INTERFACE:include&gt;
+)
+
+ament_target_dependencies(
+  rrbot_controller
+  control_msgs
+  controller_interface
+  hardware_interface
+  pluginlib
+  rclcpp
+  rclcpp_lifecycle
+  realtime_tools
+)
+</code></pre></div>
+Aquí se agrega los archivos fuente al comando add_library() de CMake. También, hay que tener en cuenta el uso de expresiones generadoras con la sintaxis $&lt;.. : ..&gt; como argumentos para la directiva target_include_directories.
+<div class="highlight"><pre><span></span><code>target_compile_definitions(rrbot_controller PUBLIC &quot;PLUGINLIB__DISABLE_BOOST_FUNCTIONS&quot;)
+</code></pre></div>
+Esta línea evita que pluginlib use Boost.
+<div class="highlight"><pre><span></span><code>pluginlib_export_plugin_description_file(controller_interface rrbot_controller.xml)
+</code></pre></div>
+El comando de CMake anterior instalará el archivo de descripción del complemento (rrbot_controller.xml) para que pluginlib pueda cargar el complemento.</p>
+<p>Los argumentos de este comando son:</p>
+<ul>
+<li>El paquete de la clase base, es decir, controller_interface.</li>
+<li>La ruta relativa al archivo XML de declaración del complemento, en este caso, solo el nombre del archivo: rrbot_controller.xml.
+<div class="highlight"><pre><span></span><code>install(
+  TARGETS
+  rrbot_controller
+  RUNTIME DESTINATION bin
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+)
+
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
+</code></pre></div>
+Esto copiará los binarios generados en lib e include. También indicamos a CMake que instale todos los archivos de lanzamiento dentro de la carpeta launch.
+<div class="highlight"><pre><span></span><code>ament_export_include_directories(
+  include
+)
+ament_export_libraries(
+  rrbot_controller
+)
+ament_export_dependencies(
+  control_msgs
+  controller_interface
+  hardware_interface
+  pluginlib
+  rclcpp
+  rclcpp_lifecycle
+  realtime_tools
+)
+</code></pre></div>
+Las líneas anteriores exportan el directorio de inclusión, la biblioteca y las dependencias para que otros proyectos las utilicen.</li>
+</ul>
+<h2 id="anadir-las-dependencias-en-el-paquete-packagexml">Añadir las dependencias en el paquete package.xml</h2>
+<p>Normalmente, se necesita agregar las dependencias externas al archivo package.xml para que ament pueda compilar el paquete.</p>
+<p>Deja este archivo sin modificar, ya que en este controlador personalizado no se utiliza ninguna biblioteca externa.
+<div class="highlight"><pre><span></span><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;?xml-model href=&quot;http://download.ros.org/schema/package_format3.xsd&quot; schematypens=&quot;http://www.w3.org/2001/XMLSchema&quot;?&gt;
+&lt;package format=&quot;3&quot;&gt;
+  &lt;name&gt;rrbot_controller&lt;/name&gt;
+  &lt;version&gt;0.0.0&lt;/version&gt;
+
+  &lt;description&gt;Controller for exemplary RRBot robot.&lt;/description&gt;
+
+  &lt;maintainer email=&quot;bence.magyar.robotics@gmail.com&quot;&gt;Bence Magyar&lt;/maintainer&gt;
+  &lt;maintainer email=&quot;denis@stogl.de&quot;&gt;Denis Štogl&lt;/maintainer&gt;
+
+  &lt;license&gt;Apache License 2.0&lt;/license&gt;
+
+  &lt;buildtool_depend&gt;ament_cmake&lt;/buildtool_depend&gt;
+
+  &lt;depend&gt;control_msgs&lt;/depend&gt;
+  &lt;depend&gt;controller_interface&lt;/depend&gt;
+  &lt;depend&gt;hardware_interface&lt;/depend&gt;
+  &lt;depend&gt;pluginlib&lt;/depend&gt;
+  &lt;depend&gt;rclcpp&lt;/depend&gt;
+  &lt;depend&gt;rclcpp_lifecycle&lt;/depend&gt;
+  &lt;depend&gt;realtime_tools&lt;/depend&gt;
+  &lt;depend&gt;example_interfaces&lt;/depend&gt;
+
+  &lt;test_depend&gt;ament_cmake_gmock&lt;/test_depend&gt;
+  &lt;test_depend&gt;controller_manager&lt;/test_depend&gt;
+  &lt;test_depend&gt;hardware_interface&lt;/test_depend&gt;
+  &lt;test_depend&gt;ros2_control_test_assets&lt;/test_depend&gt;
+
+  &lt;export&gt;
+    &lt;build_type&gt;ament_cmake&lt;/build_type&gt;
+  &lt;/export&gt;
+&lt;/package&gt;
+</code></pre></div>
+Ahora se debería compilar y corregir cualquier error que pueda aparecer:
+<div class="highlight"><pre><span></span><code>cd ~/ros2_ws &amp;&amp; colcon build --packages-select rrbot_controller
+</code></pre></div></p>
+<h2 id="crear-un-fichero-de-configuracion-del-controlador-para-el-controller-manager-yaml">Crear un fichero de configuración del controlador para el Controller Manager (.yaml)</h2>
+<p>Ahora se van a crear los archivos de configuración para ros2_control y el controlador que se utilizará. El archivo de configuración estará dentro de la carpeta config, del paquete my_robot_bringup creado anteriormente en la práctica.
+<div class="highlight"><pre><span></span><code>touch ~/ros2_ws/src/my_robot_bringup/config/rrbot_controllers_custom.yaml
+</code></pre></div>
+Copiar el siguiente código en el fichero rrbot_controllers_custom.yaml:
+<div class="highlight"><pre><span></span><code># Controller manager configuration
+controller_manager:
+  ros__parameters:
+    update_rate: 50  # Hz
+
+    # Define a name for controllers that we plan to use
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    rrbot_controller:
+      type: rrbot_controller/RRBotController
+
+# Properties of the custom controler and definition of joints to use
+rrbot_controller:
+  ros__parameters:
+    joints:
+      - joint1
+      - joint2
+    interface_name: position
+</code></pre></div>
+En este archivo de configuración se establece que se utilizará el nuevo controlador para las dos articulaciones del robot. </p>
+<h2 id="actualizar-los-parametros-de-configuracion-del-plugin-de-gazebo">Actualizar los parámetros de configuración del plugin de Gazebo</h2>
+<p>Ahora se necesita cargar el nuevo archivo de configuración YAML. Al trabajar con Gazebo, se debe referenciar este archivo dentro de los parámetros de configuración del plugin de Gazebo. Para ello, abrir el archivo XACRO del robot (rrbot.gazebo.xacro). En concreto, el archivo debería encontrarse aquí: ~/ros2_ws/src/ros2_robot_sca/description/gazebo.</p>
+<p>Localizar los tags del plugin de Gazebo ros2_control y modificar el elemento correspondiente para usar el nuevo fichero de configuración rrbot_controllers_custom.yaml, en lugar del que se está usando actualmente.</p>
+<p>Esto es lo que debe aparecer en el nuevo plugin de configuración de Gazebo ros2_control:</p>
+<div class="highlight"><pre><span></span><code>&lt;!-- ros_control plugin --&gt;
+&lt;gazebo&gt;
+  &lt;plugin filename=&quot;gz_ros2_control-system&quot; name=&quot;gz_ros2_control::GazeboSimROS2ControlPlugin&quot;&gt;
+    &lt;parameters&gt;$(find my_robot_bringup)/config/rrbot_controllers_custom.yaml&lt;/parameters&gt;
+  &lt;/plugin&gt;
+&lt;/gazebo&gt;
+</code></pre></div>
+<h2 id="crear-un-nuevo-archivo-de-lanzamiento-para-generar-el-robot-y-ejecutar-el-nuevo-controlador">Crear un nuevo archivo de lanzamiento para generar el robot y ejecutar el nuevo controlador</h2>
+<p>Crear un nuevo archivo de lanzamiento es opcional, ya que es posible iniciar y detener controladores únicamente utilizando la interfaz de línea de comandos del controller manager. Sin embargo, es más cómodo crear un nuevo archivo de lanzamiento que genere el robot en Gazebo y ejecute el nuevo controlador. Este nuevo fichero de lanzamiento se creará en la carpeta launch del paquete my_robot_bringup creado en la práctica:
+<div class="highlight"><pre><span></span><code>touch ~/ros2_ws/src/my_robot_bringup/launch/rrbot_with_rrbot_controller.launch.py
+</code></pre></div>
+El contenido de este fichero de lanzamiento será el siguiente:
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">launch.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeclareLaunchArgument</span><span class="p">,</span> <span class="n">IncludeLaunchDescription</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">launch.conditions</span><span class="w"> </span><span class="kn">import</span> <span class="n">IfCondition</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">launch.launch_description_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">PythonLaunchDescriptionSource</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">launch.substitutions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Command</span><span class="p">,</span> <span class="n">FindExecutable</span><span class="p">,</span> <span class="n">PathJoinSubstitution</span><span class="p">,</span> <span class="n">LaunchConfiguration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.substitutions</span><span class="w"> </span><span class="kn">import</span> <span class="n">FindPackageShare</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
+
+    <span class="c1"># Declare arguments</span>
+    <span class="n">declared_arguments</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">declared_arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">DeclareLaunchArgument</span><span class="p">(</span>
+            <span class="s2">&quot;gui&quot;</span><span class="p">,</span>
+            <span class="n">default_value</span><span class="o">=</span><span class="s2">&quot;false&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Start RViz2 automatically with this launch file.&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Initialize Arguments</span>
+    <span class="n">gui</span> <span class="o">=</span> <span class="n">LaunchConfiguration</span><span class="p">(</span><span class="s2">&quot;gui&quot;</span><span class="p">)</span>
+
+    <span class="c1"># gazebo</span>
+    <span class="n">gazebo</span> <span class="o">=</span> <span class="n">IncludeLaunchDescription</span><span class="p">(</span>
+        <span class="n">PythonLaunchDescriptionSource</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">FindPackageShare</span><span class="p">(</span><span class="s2">&quot;ros_gz_sim&quot;</span><span class="p">),</span> <span class="s2">&quot;/launch/gz_sim.launch.py&quot;</span><span class="p">]</span>
+        <span class="p">),</span>
+        <span class="n">launch_arguments</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;gz_args&quot;</span><span class="p">:</span> <span class="s2">&quot; -r -v 3 empty.sdf&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
+    <span class="p">)</span>
+
+    <span class="n">gz_spawn_entity</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;ros_gz_sim&quot;</span><span class="p">,</span>
+        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;create&quot;</span><span class="p">,</span>
+        <span class="n">output</span><span class="o">=</span><span class="s2">&quot;screen&quot;</span><span class="p">,</span>
+        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;-topic&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/robot_description&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;-name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;rrbot_system_position&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;-allow_renaming&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Get URDF via xacro</span>
+    <span class="n">robot_description_content</span> <span class="o">=</span> <span class="n">Command</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">PathJoinSubstitution</span><span class="p">([</span><span class="n">FindExecutable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;xacro&quot;</span><span class="p">)]),</span>
+            <span class="s2">&quot; &quot;</span><span class="p">,</span>
+            <span class="n">PathJoinSubstitution</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">FindPackageShare</span><span class="p">(</span><span class="s2">&quot;ros2_robot_sca&quot;</span><span class="p">),</span> <span class="s2">&quot;urdf&quot;</span><span class="p">,</span> <span class="s2">&quot;rrbot.urdf.xacro&quot;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="s2">&quot; &quot;</span><span class="p">,</span>
+            <span class="s2">&quot;use_gazebo:=true&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">robot_description</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;robot_description&quot;</span><span class="p">:</span> <span class="n">robot_description_content</span><span class="p">}</span>
+
+    <span class="n">robot_controllers</span> <span class="o">=</span> <span class="n">PathJoinSubstitution</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">FindPackageShare</span><span class="p">(</span><span class="s2">&quot;my_robot_bringup&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;config&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;rrbot_controllers_custom.yaml&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">rviz_config_file</span> <span class="o">=</span> <span class="n">PathJoinSubstitution</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">FindPackageShare</span><span class="p">(</span><span class="s2">&quot;ros2_robot_sca&quot;</span><span class="p">),</span> <span class="s2">&quot;rrbot/rviz&quot;</span><span class="p">,</span> <span class="s2">&quot;rrbot.rviz&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">node_robot_state_publisher</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;robot_state_publisher&quot;</span><span class="p">,</span>
+        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;robot_state_publisher&quot;</span><span class="p">,</span>
+        <span class="n">output</span><span class="o">=</span><span class="s2">&quot;screen&quot;</span><span class="p">,</span>
+        <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="n">robot_description</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">joint_state_broadcaster_spawner</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;controller_manager&quot;</span><span class="p">,</span>
+        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;spawner&quot;</span><span class="p">,</span>
+        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;joint_state_broadcaster&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">robot_controller_spawner</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;controller_manager&quot;</span><span class="p">,</span>
+        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;spawner&quot;</span><span class="p">,</span>
+        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;rrbot_controller&quot;</span><span class="p">,</span> <span class="s2">&quot;--param-file&quot;</span><span class="p">,</span> <span class="n">robot_controllers</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">rviz_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;rviz2&quot;</span><span class="p">,</span>
+        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;rviz2&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;rviz2&quot;</span><span class="p">,</span>
+        <span class="n">output</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span>
+        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="n">rviz_config_file</span><span class="p">],</span>
+        <span class="n">condition</span><span class="o">=</span><span class="n">IfCondition</span><span class="p">(</span><span class="n">gui</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">gazebo</span><span class="p">,</span>
+        <span class="n">node_robot_state_publisher</span><span class="p">,</span>
+        <span class="n">gz_spawn_entity</span><span class="p">,</span>
+        <span class="n">joint_state_broadcaster_spawner</span><span class="p">,</span>
+        <span class="n">robot_controller_spawner</span><span class="p">,</span>
+        <span class="n">rviz_node</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">LaunchDescription</span><span class="p">(</span><span class="n">declared_arguments</span> <span class="o">+</span> <span class="n">nodes</span><span class="p">)</span>
+</code></pre></div></p>
+<p>El fichero launch es parecido al creado anteriormente en la práctica, la única diferencia es este código:
+<div class="highlight"><pre><span></span><code>robot_controller_spawner = Node(
+    package=&quot;controller_manager&quot;,
+    executable=&quot;spawner&quot;,
+    arguments=[&quot;rrbot_controller&quot;, &quot;--param-file&quot;, robot_controllers],
+)
+</code></pre></div>
+La diferencia es que el archivo de lanzamiento iniciará un controlador con el nombre rrbot_controller.</p>
+<h2 id="recompilar-y-probar-el-nuevo-controlador">Recompilar y probar el nuevo controlador</h2>
+<p>Ahora se debe recompilar y ejecutar source antes de continuar y probar el controlador en el robot. Es necesario recompilar para que el nuevo archivo de lanzamiento y el archivo de configuración se copien en el espacio de instalación.
+<div class="highlight"><pre><span></span><code>cd ~/ros2_ws
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>colcon build
+</code></pre></div>
+<p>Si seguiste los pasos uno a uno hasta aquí, verás que el código se compila correctamente.
+<div class="highlight"><pre><span></span><code>source install/setup.bash
+</code></pre></div></p>
+<p>Ejecuta el nuevo archivo de lanzamiento que genera el robot y inicia el nuevo controlador:
+<div class="highlight"><pre><span></span><code>ros2 launch my_robot_bringup rrbot_with_rrbot_controller.launch.py
+</code></pre></div>
+En otra terminar confirmar que el nuevo controlador está activo (debe aparece el controlador rrbot_controller):
+<div class="highlight"><pre><span></span><code>ros2 control list_controllers
+</code></pre></div>
+En ocasiones es posible que en ROS 2 Jazzy, cuando creas un nuevo controlador como plugin para ros2_control, el sistema no lo detecte automáticamente hasta que reinicies el ordenador o máquina virtual. Este comportamiento ocurre porque ros2_control carga los plugins disponibles al iniciar el sistema, y no siempre detecta dinámicamente los nuevos plugins que se añaden después. </p>
+<p>A continuación probar a mover las articulaciones del robot utilizando el nuevo controlador:
+<div class="highlight"><pre><span></span><code>ros2 topic pub /rrbot_controller/commands control_msgs/msg/JointJog &quot;{joint_names: [&#39;joint_1&#39;, &#39;joint_2&#39;], displacements: [0.5, 0.3]}&quot;
+</code></pre></div></p>
+<h2 id="implementacion-de-un-controlador-pd-con-compensacion-de-gravedad">Implementación de un controlador PD con compensación de gravedad</h2>
+<p>En este apartado se va a modificar el controlador desarrollado en el apartado anterior para implementar un controlador PD con compensación de gravedad. La acción de control de un controlador PD con compensación de gravedad es la siguiente:</p>
+<div class="arithmatex">\[
+\tau= K_{p}\tilde{q}+K_{v}\dot{\tilde{q}}+q(q)
+\]</div>
+<p>donde <span class="arithmatex">\(K_{p}\)</span> y <span class="arithmatex">\(K_{p}\)</span> son matrices diagonales porporcional y derivativa respectivamente de tamaño nxn siendo n el número de grados de libertad del robot, <span class="arithmatex">\(\tilde{q}=q_d-q(t)\)</span> es el error entre la configuración articular a alcanzar y la posición articular actual, y <span class="arithmatex">\(g(q)\)</span> es la componente de gravedad del modelo dinaḿico del robot evaluada en la posición actual.</p>
+<p>Para implementarlo se pueden seguir los pasos que se indican en los siguientes párrafos. Primero será necesario incluir la libreria Pinocchio en el fichero rrbot_controller.cpp. Esta librería se utilizará para acceder al vector de gravedad del modelo dinámico del robot:</p>
+<div class="highlight"><pre><span></span><code>#include &lt;pinocchio/parsers/urdf.hpp&gt;
+#include &lt;pinocchio/algorithm/joint-configuration.hpp&gt;
+#include &lt;pinocchio/algorithm/rnea.hpp&gt;
+</code></pre></div>
+<p>A continuación, modificar la funcion on_init para leer los parámetros de los que depende el controlador PD con compensación de gravedad (ganancias proporcional y derivativa):
+<div class="highlight"><pre><span></span><code>CallbackReturn RRBotController::on_init() {
+    try {
+      auto_declare(&quot;joints&quot;, std::vector&lt;std::string&gt;());
+      auto_declare(&quot;interface_name&quot;, std::string());
+
+      // Parámetros para el controlador PD con compensación de gravedad
+      auto_declare(&quot;kp&quot;, std::vector&lt;double&gt;());
+      auto_declare(&quot;kd&quot;, std::vector&lt;double&gt;());
+
+      // Parámetro para la ruta del archivo URDF
+      auto_declare(&quot;robot_description_path&quot;, std::string());
+    } catch (const std::exception &amp;e) {
+      fprintf(stderr, &quot;Exception thrown during init stage with message: %s \n&quot;,
+              e.what());
+      return CallbackReturn::ERROR;
+    }
+
+    return CallbackReturn::SUCCESS;
+  }
+</code></pre></div></p>
+<p>A continuación, introducir el siguiente código en On_configure justo después de obtener joints y el interface_name y antes de crear el Command Subscriber and callbacks. Esto nos va a permitir crear el modelo de pinocchio:
+<div class="highlight"><pre><span></span><code>  // Obtener ganancias Kp y Kd
+  kp_ = get_node()-&gt;get_parameter(&quot;kp&quot;).as_double_array();
+  kd_ = get_node()-&gt;get_parameter(&quot;kd&quot;).as_double_array();
+
+  // Verificar que tenemos el número correcto de ganancias
+  if (kp_.size() != joint_names_.size() || kd_.size() != joint_names_.size()) {
+    RCLCPP_ERROR(get_node()-&gt;get_logger(), 
+                &quot;Se esperaban %zu ganancias, pero se recibieron %zu Kp y %zu Kd&quot;,
+                joint_names_.size(), kp_.size(), kd_.size());
+    return CallbackReturn::ERROR;
+  }
+
+  // Obtener la ruta del archivo URDF
+  std::string urdf_path;
+  get_string_param_and_error_if_empty(urdf_path, &quot;robot_description_path&quot;);
+
+  // Inicializar el modelo de Pinocchio desde el URDF
+  try {
+    // Crear el modelo y los datos
+    model_ = std::make_shared&lt;pinocchio::Model&gt;();
+
+    // Cargar el modelo desde el URDF
+    pinocchio::urdf::buildModel(urdf_path, *model_);
+    data_ = std::make_shared&lt;pinocchio::Data&gt;(*model_);
+
+    // Verificar que los nombres de las articulaciones coinciden
+    bool joints_found = true;
+    joint_indices_.resize(joint_names_.size());
+
+    for (size_t i = 0; i &lt; joint_names_.size(); ++i) {
+      if (model_-&gt;existJointName(joint_names_[i])) {
+        joint_indices_[i] = model_-&gt;getJointId(joint_names_[i]);
+      } else {
+        joints_found = false;
+        RCLCPP_ERROR(get_node()-&gt;get_logger(), 
+                    &quot;No se encontró la articulación &#39;%s&#39; en el modelo URDF&quot;,
+                    joint_names_[i].c_str());
+      }
+    }
+
+    if (!joints_found) {
+      return CallbackReturn::ERROR;
+    }
+
+    RCLCPP_INFO(get_node()-&gt;get_logger(), &quot;Modelo Pinocchio inicializado con éxito&quot;);
+  } catch (const std::exception&amp; e) {
+    RCLCPP_ERROR(get_node()-&gt;get_logger(), 
+                &quot;Error al inicializar el modelo Pinocchio: %s&quot;, 
+                e.what());
+    return CallbackReturn::ERROR;
+  }
+</code></pre></div></p>
+<p>En controller_interface::InterfaceConfiguration RRBotController::command_interface_configuration() cambiar el interfaz para controlar por torque:</p>
+<div class="highlight"><pre><span></span><code>command_interfaces_config.names.push_back(joint + &quot;/effort&quot;);  // Cambiado a effort para control de torque
+</code></pre></div>
+<p>En controller_interface::InterfaceConfiguration RRBotController::state_interface_configuration cambiarla por la siguiente función ya que necesitamos leer tanto la posición como la velocidad articular para implementar el control PD:</p>
+<div class="highlight"><pre><span></span><code>controller_interface::InterfaceConfiguration RRBotController::state_interface_configuration() const
+{
+  controller_interface::InterfaceConfiguration state_interfaces_config;
+  state_interfaces_config.type = controller_interface::interface_configuration_type::INDIVIDUAL;
+
+  // Necesitamos leer tanto la posición como la velocidad para el control PD
+  state_interfaces_config.names.reserve(joint_names_.size() * 2);
+  for (const auto &amp; joint : joint_names_) {
+    state_interfaces_config.names.push_back(joint + &quot;/position&quot;);
+    state_interfaces_config.names.push_back(joint + &quot;/velocity&quot;);
+  }
+
+  return state_interfaces_config;
+}
+</code></pre></div>
+<p>Antes de get_ordered interfaces crear esta función para calcular el vector de gravedad usando Pinocchio:
+<div class="highlight"><pre><span></span><code>std::vector&lt;double&gt; RRBotController::calculate_gravity_vector(const std::vector&lt;double&gt;&amp; q)
+{
+  // Crear un vector de configuración para Pinocchio (podría incluir articulaciones base flotante)
+  Eigen::VectorXd q_pin = Eigen::VectorXd::Zero(model_-&gt;nq);
+
+  // Llenar el vector de configuración con los valores de las articulaciones controladas
+  for (size_t i = 0; i &lt; joint_names_.size(); ++i) {
+    // Ajustar el índice según cómo esté estructurado tu modelo en Pinocchio
+    q_pin[i] = q[i];
+  }
+
+  // Velocidades y aceleraciones cero para calcular solo la gravedad
+  Eigen::VectorXd v_pin = Eigen::VectorXd::Zero(model_-&gt;nv);
+  Eigen::VectorXd a_pin = Eigen::VectorXd::Zero(model_-&gt;nv);
+
+  // Calcular la dinámica inversa con velocidades y aceleraciones cero para obtener solo el vector de gravedad
+  pinocchio::rnea(*model_, *data_, q_pin, v_pin, a_pin);
+
+  // Extraer el torque de gravedad para nuestras articulaciones
+  std::vector&lt;double&gt; g_vector(joint_names_.size(), 0.0);
+  for (size_t i = 0; i &lt; joint_names_.size(); ++i) {
+    g_vector[i] = data_-&gt;tau[model_-&gt;joints[joint_indices_[i]].idx_v()];
+  }
+
+  return g_vector;
+}
+</code></pre></div></p>
+<p>En On_activate incorporar el siguiente código que permitirá leer posición y velocidad articular actual:
+<div class="highlight"><pre><span></span><code>// Obtener las interfaces de estado ordenadas (posición y velocidad)
+  position_state_interfaces_.clear();
+  velocity_state_interfaces_.clear();
+
+  for (size_t i = 0; i &lt; joint_names_.size(); ++i) {
+    // Buscar las interfaces de posición
+    for (auto&amp; interface : state_interfaces_) {
+      if (interface.get_name() == (joint_names_[i]+&quot;/&quot;+interface.get_interface_name()) &amp;&amp; 
+          interface.get_interface_name() == &quot;position&quot;) {
+        position_state_interfaces_.push_back(std::ref(interface));
+        break;
+      }
+    }
+
+    // Buscar las interfaces de velocidad
+    for (auto&amp; interface : state_interfaces_) {
+      if (interface.get_name() == (joint_names_[i]+&quot;/&quot;+interface.get_interface_name()) &amp;&amp; 
+          interface.get_interface_name() == &quot;velocity&quot;) {
+        velocity_state_interfaces_.push_back(std::ref(interface));
+        break;
+      }
+    }
+  }
+
+  // Verificar que tenemos todas las interfaces necesarias
+  if (position_state_interfaces_.size() != joint_names_.size() ||
+      velocity_state_interfaces_.size() != joint_names_.size()) {
+    RCLCPP_ERROR(get_node()-&gt;get_logger(), 
+                &quot;No se pudieron encontrar todas las interfaces de estado necesarias&quot;);
+    return CallbackReturn::ERROR;
+  }
+</code></pre></div></p>
+<p>La nueva función update que calcula la acción de control será la siguiente:
+<div class="highlight"><pre><span></span><code>controller_interface::return_type
+RRBotController::update(const rclcpp::Time &amp;time,
+                        const rclcpp::Duration &amp;period) {
+  auto current_command = input_command_.readFromRT();
+
+  // Obtener las posiciones y velocidades actuales
+  std::vector&lt;double&gt; current_positions(joint_names_.size(), 0.0);
+  std::vector&lt;double&gt; current_velocities(joint_names_.size(), 0.0);
+
+  for (size_t i = 0; i &lt; joint_names_.size(); ++i) {
+    current_positions[i] = position_state_interfaces_[i].get().get_value();
+    current_velocities[i] = velocity_state_interfaces_[i].get().get_value();
+  }
+
+  // Obtener posiciones deseadas del comando
+  std::vector&lt;double&gt; desired_positions(joint_names_.size(), 0.0);
+  for (size_t i = 0; i &lt; joint_names_.size(); ++i) {
+    if (!std::isnan((*current_command)-&gt;displacements[i])) {
+      desired_positions[i] = (*current_command)-&gt;displacements[i];
+    } else {
+      desired_positions[i] = current_positions[i];  // Mantener posición actual si no hay comando
+    }
+  }
+
+  // Calcular el vector de gravedad usando Pinocchio
+  std::vector&lt;double&gt; gravity = calculate_gravity_vector(current_positions);
+
+  // Calcular el error de posición y velocidad
+  std::vector&lt;double&gt; position_error(joint_names_.size(), 0.0);
+
+  for (size_t i = 0; i &lt; joint_names_.size(); ++i) {
+    position_error[i] = desired_positions[i] - current_positions[i];
+  }
+
+  // Calcular el comando de torque usando PD con compensación de gravedad
+  // tau = Kp * (q_d - q) - Kd * q_dot + g(q)
+  std::vector&lt;double&gt; torque_command(joint_names_.size(), 0.0);
+
+  for (size_t i = 0; i &lt; joint_names_.size(); ++i) {
+     torque_command[i] = kp_[i] * position_error[i] - 
+                      kd_[i] * current_velocities[i] + 
+                      gravity[i];
+  }
+
+  // Aplicar el comando de torque
+  for (size_t i = 0; i &lt; joint_names_.size(); ++i) {
+    if (!command_interfaces_[i].set_value(torque_command[i])) {
+      RCLCPP_ERROR(
+          get_node()-&gt;get_logger(), 
+          &quot;Failed to set command interface value for joint %zu&quot;, 
+          i
+      );
+      return controller_interface::return_type::ERROR;
+    }
+  }
+
+  if (state_publisher_ &amp;&amp; state_publisher_-&gt;trylock()) {
+    state_publisher_-&gt;msg_.header.stamp = time;
+    state_publisher_-&gt;msg_.set_point = desired_positions[0];  // Publicar la posición deseada
+
+    state_publisher_-&gt;unlockAndPublish();
+  }
+
+  return controller_interface::return_type::OK;
+}
+</code></pre></div></p>
+<p>También será necesario modificar el fichero de encabezado rrbot_controller.hpp para incluir las dependencias:
+<div class="highlight"><pre><span></span><code>#include &lt;pinocchio/multibody/model.hpp&gt;
+#include &lt;pinocchio/multibody/data.hpp&gt;
+
+#include &lt;hardware_interface/loaned_state_interface.hpp&gt;
+</code></pre></div>
+La sección protected de este fichero sería la siguiente:
+<div class="highlight"><pre><span></span><code>std::vector&lt;double&gt; calculate_gravity_vector(const std::vector&lt;double&gt;&amp; q);
+
+  std::vector&lt;std::string&gt; joint_names_;
+  std::string interface_name_;
+
+  // Command subscribers and Controller State publisher
+  using ControllerCommandMsg = control_msgs::msg::JointJog;
+
+  // Command subscribers and Controller State publisher
+  using ControllerStateMsg = control_msgs::msg::JointControllerState;
+  using ControllerStatePublisher =
+  realtime_tools::RealtimePublisher&lt;ControllerStateMsg&gt;;
+
+  // Parámetros del controlador PD
+  std::vector&lt;double&gt; kp_;  // Ganancia proporcional
+  std::vector&lt;double&gt; kd_;  // Ganancia derivativa
+
+  // Modelo y datos de Pinocchio
+  std::shared_ptr&lt;pinocchio::Model&gt; model_;
+  std::shared_ptr&lt;pinocchio::Data&gt; data_;
+  std::vector&lt;pinocchio::JointIndex&gt; joint_indices_;  // Índices de las articulaciones en el modelo
+
+  // Interfaces de estado organizadas
+  std::vector&lt;std::reference_wrapper&lt;hardware_interface::LoanedStateInterface&gt;&gt; position_state_interfaces_;
+  std::vector&lt;std::reference_wrapper&lt;hardware_interface::LoanedStateInterface&gt;&gt; velocity_state_interfaces_;
+
+  // Subscriber para comandos y buffer
+  rclcpp::Subscription&lt;ControllerCommandMsg&gt;::SharedPtr command_subscriber_;
+  realtime_tools::RealtimeBuffer&lt;std::shared_ptr&lt;ControllerCommandMsg&gt;&gt; input_command_;
+
+  // Publisher para estado
+  rclcpp::Publisher&lt;ControllerStateMsg&gt;::SharedPtr s_publisher_;
+  std::unique_ptr&lt;ControllerStatePublisher&gt; state_publisher_;
+</code></pre></div>
+Además, es necesario actualizar el archivo YAML rrbot_controllers_custom.yaml para incluir las ganancias de los controladores y la ruta del archivo URDF:
+<div class="highlight"><pre><span></span><code># Controller manager configuration
+controller_manager:
+  ros__parameters:
+    update_rate: 50  # Hz
+    # Define a name for controllers that we plan to use
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    rrbot_controller:
+      type: rrbot_controller/RRBotController
+
+# Properties of the custom controler and definition of joints to use
+rrbot_controller:
+  ros__parameters:
+    joints:
+      - joint1
+      - joint2
+    interface_name: position  # Se mantiene por compatibilidad
+
+    # Ganancias del controlador PD
+    kp: [100.0, 100.0]  # Ganancia proporcional para cada articulación
+    kd: [10.0, 10.0]    # Ganancia derivativa para cada articulación
+
+    # Ruta del archivo URDF para Pinocchio
+    robot_description_path: &quot;/home/ubuntu/ros2_ws/src/ros2_robot_sca/description/urdf/model.urdf&quot;
+</code></pre></div></p>
+<p>Antes de poder compilar todo será necesario instalar pinocchio:
+<div class="highlight"><pre><span></span><code>sudo apt-get install ros-jazzy-pinocchio
+</code></pre></div>
+También es necesario actualizar las dependencias del paquete rrbot_controller. Para ello, se debe añadir Pinocchio como dependencia en el archivo package.xml:
+<div class="highlight"><pre><span></span><code>&lt;depend&gt;pinocchio&lt;/depend&gt;
+</code></pre></div>
+Además, habrá que actualizar CMakeLists.txt para añadir las dependencias a pinocchio y eigen3:
+<div class="highlight"><pre><span></span><code>cmake_minimum_required(VERSION 3.5)
+project(rrbot_controller)
+
+# Default to C++14
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES &quot;Clang&quot;)
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+# find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(control_msgs REQUIRED)
+find_package(controller_interface REQUIRED)
+find_package(hardware_interface REQUIRED)
+find_package(pluginlib REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(realtime_tools REQUIRED)
+find_package(example_interfaces REQUIRED)
+
+find_package(pinocchio REQUIRED)
+find_package(Eigen3 REQUIRED NO_MODULE)
+
+
+add_library(
+  rrbot_controller
+  SHARED
+  src/rrbot_controller.cpp
+)
+target_include_directories(
+  rrbot_controller
+  PUBLIC
+  $&lt;BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include&gt;
+  $&lt;INSTALL_INTERFACE:include&gt;
+)
+ament_target_dependencies(
+  rrbot_controller
+  control_msgs
+  controller_interface
+  hardware_interface
+  pluginlib
+  rclcpp
+  rclcpp_lifecycle
+  realtime_tools
+)
+
+
+target_link_libraries(rrbot_controller
+  pinocchio::pinocchio
+  Eigen3::Eigen
+)
+
+# prevent pluginlib from using boost
+target_compile_definitions(rrbot_controller PUBLIC &quot;PLUGINLIB__DISABLE_BOOST_FUNCTIONS&quot;)
+
+pluginlib_export_plugin_description_file(
+  controller_interface rrbot_controller.xml)
+
+install(
+  TARGETS
+  rrbot_controller
+  RUNTIME DESTINATION bin
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+)
+
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
+
+ament_export_include_directories(
+  include
+)
+ament_export_libraries(
+  rrbot_controller
+)
+ament_export_dependencies(
+  control_msgs
+  controller_interface
+  hardware_interface
+  pluginlib
+  rclcpp
+  rclcpp_lifecycle
+  realtime_tools
+  pinocchio
+  Eigen3
+)
+
+ament_package()
+</code></pre></div></p>
+<h3 id="recompilar-y-probar-el-nuevo-controlador_1">Recompilar y probar el nuevo controlador</h3>
+<p>Ahora se debe recompilar y ejecutar source antes de continuar y probar el controlador en el robot. Es necesario recompilar para que el nuevo archivo de lanzamiento y el archivo de configuración se copien en el espacio de instalación.
+<div class="highlight"><pre><span></span><code>cd ~/ros2_ws
+</code></pre></div></p>
+<p><div class="highlight"><pre><span></span><code>colcon build
+</code></pre></div>
+Puede que obtengas bastantes warnings de Eigen y Pinocchio sobre posibles variables no inicializadas en los constructores. Estas advertencias no deberían impedir que tu controlador se compile correctamente. </p>
+<p><div class="highlight"><pre><span></span><code>source install/setup.bash
+</code></pre></div>
+Ejecuta el nuevo archivo de lanzamiento que genera el robot e inicia el nuevo controlador:
+<div class="highlight"><pre><span></span><code>ros2 launch my_robot_bringup rrbot_with_rrbot_controller.launch.py
+</code></pre></div>
+En otra terminal confirmar que el nuevo controlador está activo (debe aparece el controlador rrbot_controller):
+<div class="highlight"><pre><span></span><code>ros2 control list_controllers
+</code></pre></div>
+A continuación probar a mover las articulaciones del robot utilizando el nuevo controlador:
+<div class="highlight"><pre><span></span><code>ros2 topic pub /rrbot_controller/commands control_msgs/msg/JointJog &quot;{joint_names: [&#39;joint_1&#39;, &#39;joint_2&#39;], displacements: [0.5, 0.3]}&quot;
+</code></pre></div></p>
+<div class="admonition note annotate">
+<p class="admonition-title">Ejercicio</p>
+<ul>
+<li>Ajustar el controlador PD con compensación de gravedad.</li>
+<li>Comparar el comportamiento del controlador PD con compensación de gravedad frente a un controlador PD.</li>
+<li>Implementar un controlador PID y ajustarlo correctamente.</li>
+<li>Comparar el comportamiento de los tres controladores: PD, PD con compensación de gravedad y PID.</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.select", "content.code.copy"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

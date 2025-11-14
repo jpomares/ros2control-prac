@@ -1,0 +1,1856 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../conceptos_basicos/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Los paquetes de ros2_control - Ros2_control</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#los-paquetes-de-ros2_control" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Ros2_control" class="md-header__button md-logo" aria-label="Ros2_control" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ros2_control
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Los paquetes de ros2_control
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Ros2_control" class="md-nav__button md-logo" aria-label="Ros2_control" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Ros2_control
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción e instalación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Los paquetes de ros2_control
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Los paquetes de ros2_control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#controladores-para-manipuladores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controladores para manipuladores
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#broadcasters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Broadcasters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parametros-comunes-de-los-controladores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros Comunes de los Controladores
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#forward_command_controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        forward_command_controller
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="forward_command_controller">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tipo-de-interfaz-de-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo de interfaz de hardware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interfaz-ros-2-del-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interfaz ROS 2 del controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaz ROS 2 del controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tópics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#position_controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Position_controllers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Position_controllers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interfaz-ros-2-del-controlador_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interfaz ROS 2 del controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaz ROS 2 del controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topics_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tópics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#velocity_controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Velocity_controllers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Velocity_controllers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interfaz-ros-2-del-controlador_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interfaz ROS 2 del controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaz ROS 2 del controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topics_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tópics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effort_controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effort_controllers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Effort_controllers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interfaz-ros-2-del-controlador_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interfaz ROS 2 del controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaz ROS 2 del controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topics_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tópics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controlador-pid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlador PID
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Controlador PID">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interfaz-ros-2-del-controlador_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interfaz ROS 2 del controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaz ROS 2 del controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topics_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Topics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parámetros">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dof_names-string_array" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dof_names (string_array)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference_and_state_dof_names-string_array-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        reference_and_state_dof_names (string_array) (opcional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command_interface-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        command_interface (string)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference_and_state_interfaces-string_array" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        reference_and_state_interfaces (string_array)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use_external_measured_states-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        use_external_measured_states (bool)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsp-double" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..p (double)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsi-double" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..i (double)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsd-double" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..d (double)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsantiwindup-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..antiwindup (bool)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsi_clamp_max-double" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..i_clamp_max (double)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsi_clamp_min-double" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..i_clamp_min (double)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsfeedforward_gain-double" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..feedforward_gain (double)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsangle_wraparound-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..angle_wraparound (bool)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainssave_i_term-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..save_i_term (bool)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conceptos_basicos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conceptos básicos de ros2_control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interfaz hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../controlador_propio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creación de un controlador propio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#controladores-para-manipuladores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controladores para manipuladores
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#broadcasters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Broadcasters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parametros-comunes-de-los-controladores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros Comunes de los Controladores
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#forward_command_controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        forward_command_controller
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="forward_command_controller">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tipo-de-interfaz-de-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo de interfaz de hardware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interfaz-ros-2-del-controlador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interfaz ROS 2 del controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaz ROS 2 del controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tópics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#position_controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Position_controllers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Position_controllers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interfaz-ros-2-del-controlador_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interfaz ROS 2 del controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaz ROS 2 del controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topics_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tópics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#velocity_controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Velocity_controllers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Velocity_controllers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interfaz-ros-2-del-controlador_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interfaz ROS 2 del controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaz ROS 2 del controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topics_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tópics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effort_controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effort_controllers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Effort_controllers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interfaz-ros-2-del-controlador_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interfaz ROS 2 del controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaz ROS 2 del controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topics_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tópics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controlador-pid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlador PID
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Controlador PID">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interfaz-ros-2-del-controlador_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interfaz ROS 2 del controlador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interfaz ROS 2 del controlador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topics_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Topics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parámetros">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dof_names-string_array" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dof_names (string_array)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference_and_state_dof_names-string_array-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        reference_and_state_dof_names (string_array) (opcional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command_interface-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        command_interface (string)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference_and_state_interfaces-string_array" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        reference_and_state_interfaces (string_array)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use_external_measured_states-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        use_external_measured_states (bool)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsp-double" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..p (double)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsi-double" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..i (double)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsd-double" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..d (double)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsantiwindup-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..antiwindup (bool)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsi_clamp_max-double" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..i_clamp_max (double)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsi_clamp_min-double" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..i_clamp_min (double)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsfeedforward_gain-double" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..feedforward_gain (double)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainsangle_wraparound-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..angle_wraparound (bool)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gainssave_i_term-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gains..save_i_term (bool)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="los-paquetes-de-ros2_control">Los paquetes de ros2_control</h1>
+<p>Ros2_control es un conjunto de paquetes que incluyen los interfaces de los controladores, los manejadores de los controladores, transmisiones, interfaces hardware y la toolbox de control. Todos estos paquetes conjuntamente permiten interactuar y controlar las articulaciones y actuadores de un robot.</p>
+<p>Estos paquetes funcionan de la siguiente manera: los paquetes ros2_control utilizan como entrada los datos relativos acerca del estado de las articulaciones y una entrada de referencia articular. Además, estos paquetes generan como salida el comando adecuado a los actuadores (habitualmente como un comando de esfuerzo, posición o velocidad), con el objetivo de que los valores articulares actuales (joint states) alcancen la referencia articular. Emplean un mecanismo genérico de control mediante realimentación, típicamente un controlador PID, para controlar la salida. Esta acción de control se transfiere al robot a través del interfaz hardware.</p>
+<p>En primer lugar, se va a describir cómo integrar los paquetes ros2_control con un entorno de simulación de forma que sea posible controlar el robot simulado empleando esta herramienta. En la siguiente figura se muestra cómo ros2_control puede interactuar bien con el robot simulado o bien con el robot real.</p>
+<p><img alt="Estructura de ros2_control" src="../images/ros2controlesq.png" /></p>
+<p>El bloque 3rd party representa la aplicación que envía el objetivo o referencia a los paquetes ros2_control, que puede ser, por ejemplo, el stack Nav2 o la aplicación MoveIt2. En esta figura también se ha representado en naranja el bloque ros2_control, el hardware interfaz en la parte derecha (que representa la conexión entre los diferentes controladores y el robot) y tanto el robot real como el simulado.</p>
+<h2 id="controladores-para-manipuladores">Controladores para manipuladores</h2>
+<p>Los paquetes ros2_control proporcionan un conjunto de controladores (controller plugins) para interactuar de diferente manera con las articulaciones de un robot. Los controladores disponibles para robots manipuladores son los siguientes:</p>
+<ul>
+<li>Controlador de Admitancia (Admittance Controller)</li>
+<li>Controladores de Esfuerzo (Effort Controllers)</li>
+<li>Controlador de Comando Directo (Forward Command Controller)</li>
+<li>Controlador de Pinza (Gripper Controller)</li>
+<li>Controlador de Trayectoria Articular (Joint Trajectory Controller)</li>
+<li>Controlador de Pinza Paralela (Parallel Gripper Controller)</li>
+<li>Controlador PID (PID Controller)</li>
+<li>Controladores de Posición (Position Controllers)</li>
+<li>Controladores de Velocidad (Velocity Controllers)</li>
+<li>Controlador de Comando GPIO (Gpio Command Controller)</li>
+</ul>
+<h2 id="broadcasters">Broadcasters</h2>
+<p>Los broadcasters se utilizan para publicar datos de sensores desde componentes de hardware a topics de ROS. En el contexto de ros2_control, los broadcasters siguen siendo controladores y usan la misma interfaz de controlador que los mencionados anteriormente.</p>
+<p>Los principales tipos de broadcasters son: </p>
+<ul>
+<li>Broadcasters de Sensor de Fuerza y Torque (Force Torque Sensor Broadcaster)</li>
+<li>Broadcasters de Sensor IMU (IMU Sensor Broadcaster)</li>
+<li>Broadcasters de Estado Articular (Joint State Broadcaster)</li>
+<li>Broadcasters de Sensor de Rango (Range Sensor Broadcaster)</li>
+<li>Broadcasters de Posición (Pose Broadcaster)</li>
+</ul>
+<h2 id="parametros-comunes-de-los-controladores">Parámetros Comunes de los Controladores</h2>
+<p>Cada controlador o broadcaster tiene algunos parámetros comunes. Estos parámetros deben configurarse antes de su activación. Los parámetros comunes de los controladores son los siguientes:</p>
+<ul>
+<li>update_rate: Parámetro entero sin signo que representa la frecuencia con la que cada controlador/broadcaster ejecuta su ciclo de actualización. Si no se especifica, operan a la misma frecuencia que el controller_manager.</li>
+<li>is_async: Un parámetro booleano que indica si la actualización del controlador debe ejecutarse de forma asíncrona.</li>
+</ul>
+<p>En los siguientes apartados se describirán los controladores más comunes.</p>
+<h2 id="forward_command_controller">forward_command_controller</h2>
+<p>Esta es una clase base que implementa un controlador de prealimentación o de comando directo (feedforward controller). Implementaciones específicas de esta clase base se pueden encontrar en:</p>
+<ul>
+<li>position_controllers</li>
+<li>velocity_controllers</li>
+<li>effort_controllers</li>
+</ul>
+<h3 id="tipo-de-interfaz-de-hardware">Tipo de interfaz de hardware</h3>
+<p>Este controlador se puede utilizar para cualquier tipo de interfaz de hardware.</p>
+<h3 id="interfaz-ros-2-del-controlador">Interfaz ROS 2 del controlador</h3>
+<h4 id="topics">Tópics</h4>
+<div class="highlight"><pre><span></span><code>~/commands (topic de entrada) [std_msgs::msg::Float64MultiArray]
+    Target joint commands
+</code></pre></div>
+<h4 id="parametros">Parámetros</h4>
+<p>Este controlador utiliza la biblioteca generate_parameter_library para gestionar sus parámetros.</p>
+<h4 id="ejemplo">Ejemplo</h4>
+<p>Ejemplo de fichero de configuración YAML (será utilizado más adelante):</p>
+<details class="example" open="open">
+<summary>Example</summary>
+<div class="highlight"><pre><span></span><code>controller_manager:
+    ros__parameters:
+        update_rate: 100  # Hz
+
+        forward_position_controller:
+            type: forward_command_controller/ForwardCommandController
+
+forward_position_controller:
+    ros__parameters:
+        joints:
+            - slider_to_cart
+</code></pre></div>
+</details>
+<p>En este código se definen los parámetros para el gestor de controladores (controller_manager). En primer lugar se define la frecuencia de realimentación del controlador a 100 Hz. Además, se define un controlador tipo forward_command_controller/ForwardCommandController el cual se denomina forward_position_controller. Además, se asigna este controlador a la articulación slider_to_cart. Un controlador tipo forward_command_controller/ForwardCommandController simplemente genera como acción de control el valor de su consigna.</p>
+<h2 id="position_controllers">Position_controllers</h2>
+<p>Se trata de una colección de controladores que funcionan utilizando la interfaz de comando articular de “posición”. Es una especialización del forward_command_controller que funciona utilizando la interfaz articular de “posición”. El paquete contiene los siguientes controladores:</p>
+<div class="highlight"><pre><span></span><code>position_controllers/JointGroupPositionController
+</code></pre></div>
+<h3 id="interfaz-ros-2-del-controlador_1">Interfaz ROS 2 del controlador</h3>
+<h4 id="topics_1">Tópics</h4>
+<div class="highlight"><pre><span></span><code>~/commands (tópico de entrada) [std_msgs::msg::Float64MultiArray] 
+    Comandos de posición para las articulaciones
+</code></pre></div>
+<h4 id="parametros_1">Parámetros</h4>
+<p>Este controlador sobrescribe el parámetro de interfaz de forward_command_controller, y el único parámetro obligatorio es joints.</p>
+<h4 id="ejemplo_1">Ejemplo</h4>
+<p>Ejemplo de fichero de configuración yaml.</p>
+<details class="example" open="open">
+<summary>Example</summary>
+<div class="highlight"><pre><span></span><code>controller_manager:
+    ros__parameters:
+        update_rate: 100  # Hz
+
+        position_controller:
+            type: position_controllers/JointGroupPositionController
+
+position_controller:
+    ros__parameters:
+        joints:
+            - slider_to_cart
+</code></pre></div>
+</details>
+<h2 id="velocity_controllers">Velocity_controllers</h2>
+<p>Se trata de una colección de controladores que funcionan utilizando la interfaz de comando articular de “velocidad”. Es una especialización del forward_command_controller que funciona utilizando la interfaz articular de “velocidad”. El paquete contiene los siguientes controladores:</p>
+<div class="highlight"><pre><span></span><code>velocity_controllers/JointGroupVelocityController
+</code></pre></div>
+<h3 id="interfaz-ros-2-del-controlador_2">Interfaz ROS 2 del controlador</h3>
+<h4 id="topics_2">Tópics</h4>
+<div class="highlight"><pre><span></span><code>~/commands (tópico de entrada) [std_msgs::msg::Float64MultiArray] 
+    Comandos de velocidad para las articulaciones
+</code></pre></div>
+<h4 id="parametros_2">Parámetros</h4>
+<p>Este controlador sobrescribe el parámetro de interfaz de forward_command_controller, y el único parámetro obligatorio es joints.</p>
+<h4 id="ejemplo_2">Ejemplo</h4>
+<p>Ejemplo de fichero de configuración yaml.</p>
+<details class="example" open="open">
+<summary>Example</summary>
+<div class="highlight"><pre><span></span><code>controller_manager:
+    ros__parameters:
+        update_rate: 100  # Hz
+
+        velocity_controller:
+            type: velocity_controllers/JointGroupVelocityController
+
+velocity_controller:
+    ros__parameters:
+        joints:
+            - slider_to_cart
+</code></pre></div>
+</details>
+<h2 id="effort_controllers">Effort_controllers</h2>
+<p>Se trata de una colección de controladores que funcionan utilizando la interfaz de comando articular de “esfuerzo o par”. Es una especialización del forward_command_controller que funciona utilizando la interfaz articular de “esfuerzo”. El paquete contiene los siguientes controladores:</p>
+<div class="highlight"><pre><span></span><code>effort_controllers/JointGroupEffortController
+</code></pre></div>
+<h3 id="interfaz-ros-2-del-controlador_3">Interfaz ROS 2 del controlador</h3>
+<h4 id="topics_3">Tópics</h4>
+<div class="highlight"><pre><span></span><code>~/commands (tópico de entrada) [std_msgs::msg::Float64MultiArray] 
+    Comandos de esfuerzo para las articulaciones
+</code></pre></div>
+<h4 id="parametros_3">Parámetros</h4>
+<p>Este controlador sobrescribe el parámetro de interfaz de forward_command_controller, y el único parámetro obligatorio es joints.</p>
+<h4 id="ejemplo_3">Ejemplo</h4>
+<p>Ejemplo de fichero de configuración yaml.</p>
+<details class="example" open="open">
+<summary>Example</summary>
+<div class="highlight"><pre><span></span><code>controller_manager:
+    ros__parameters:
+        update_rate: 100  # Hz
+
+        effort_controller:
+            type: effort_controllers/JointGroupEffortController
+
+effort_controller:
+    ros__parameters:
+        joints:
+            - slider_to_cart
+</code></pre></div>
+</details>
+<h2 id="controlador-pid">Controlador PID</h2>
+<p>Se trata de una implementación de un controlador PID que se basa en el paquete PidROS de <a href="https://github.com/ros-controls/control_toolbox/">control_toolbox</a>. El controlador puede usarse directamente enviando referencias a través de un tópic. También permite utilizar la primera derivada de la referencia y su realimentación para lograr un control PID de segundo orden.</p>
+<p>Dependiendo de la interfaz de referencia/estado y la acción de control enviada al hardware, se debe utilizar una configuración de parámetros diferente de PidROS, por ejemplo:</p>
+<ul>
+<li>Referencia/Estado: POSICIÓN; Acción de control: VELOCIDAD → Controlador PI</li>
+<li>Referencia/Estado: VELOCIDAD; Acción de control: ACELERACIÓN → Controlador PI</li>
+<li>Referencia/Estado: VELOCIDAD; Acción de control: POSICIÓN → Controlador PD</li>
+<li>Referencia/Estado: ACELERACIÓN; Acción de control: VELOCIDAD → Controlador PD</li>
+<li>Referencia/Estado: POSICIÓN; Acción de control: POSICIÓN → Controlador PID</li>
+<li>Referencia/Estado: VELOCIDAD; Acción de control: VELOCIDAD → Controlador PID</li>
+<li>Referencia/Estado: ACELERACIÓN; Acción de control: ACELERACIÓN → Controlador PID</li>
+<li>Referencia/Estado: ESFUERZO; Acción de control: ESFUERZO → Controlador PID</li>
+</ul>
+<p>Si se utiliza un solo tipo de interfaz de referencia y estado, solo se considera el error inmediato. Si se usan dos tipos, entonces la segunda interfaz se considera la primera derivada de la primera. Por ejemplo, una combinación válida sería las interfaces de posición y velocidad.</p>
+<p>Pluginlib-Library: pid_controller Plugin name: pid_controller/PidController</p>
+<h3 id="interfaz-ros-2-del-controlador_4">Interfaz ROS 2 del controlador</h3>
+<h4 id="topics_4">Topics</h4>
+<div class="highlight"><pre><span></span><code>&lt;dof_names[i]&gt;/&lt;command_interface&gt; [double]
+</code></pre></div>
+<h4 id="parametros_4">Parámetros</h4>
+<h5 id="dof_names-string_array">dof_names (string_array)</h5>
+<p>Especifica dof_names o ejes utilizados por el controlador. Si se define el estado "reference_and_state_dof_names", entonces con este parámetro solo se define lo nombres de los grados de libertad controlados.</p>
+<p>Read only: True</p>
+<p>Default: {}</p>
+<h5 id="reference_and_state_dof_names-string_array-opcional">reference_and_state_dof_names (string_array) (opcional)</h5>
+<p>Especifica los dof_names o ejes para obtener la referencia y leer los estados. Este parámetro solo es relevante cuando los dof_names de estado son diferentes de los dof_names de comando, es decir, cuando se utiliza un controlador posterior.</p>
+<p>Read only: True</p>
+<p>Default: {}</p>
+<h5 id="command_interface-string">command_interface (string)</h5>
+<p>Nombre de la interfaz utilizada por el controlador para enviar comandos al hardware.</p>
+<p>Read only: True</p>
+<p>Default: “”</p>
+<h5 id="reference_and_state_interfaces-string_array">reference_and_state_interfaces (string_array)</h5>
+<p>Nombre de las interfaces utilizadas por el controlador para obtener los estados del hardware y los comandos de referencia. La segunda interfaz debe ser la derivada de la primera.</p>
+<p>Read only: True</p>
+<p>Default: {}</p>
+<p>La longitud es mayor que 0 y menor que 3.</p>
+<h5 id="use_external_measured_states-bool">use_external_measured_states (bool)</h5>
+<p>Usa estados externos desde un topic en lugar de las interfaces de estado.</p>
+<p>Default: false</p>
+<h5 id="gainsp-double">gains.<dof_names>.p (double)</h5>
+<p>Ganancia proporcional del PID</p>
+<p>Default: 0.0</p>
+<h5 id="gainsi-double">gains.<dof_names>.i (double)</h5>
+<p>Ganancia integral del PID</p>
+<p>Default: 0.0</p>
+<h5 id="gainsd-double">gains.<dof_names>.d (double)</h5>
+<p>Ganancia derivativa del PID</p>
+<p>Default: 0.0</p>
+<h5 id="gainsantiwindup-bool">gains.<dof_names>.antiwindup (bool)</h5>
+<p>Funcionalidad anti-windup. Cuando está activada (true), limita el error integral para evitar el windup; de lo contrario, restringe la contribución integral en la salida de control. Los valores i_clamp_max e i_clamp_min se aplican en ambos casos.</p>
+<p>Default: false</p>
+<h5 id="gainsi_clamp_max-double">gains.<dof_names>.i_clamp_max (double)</h5>
+<p>Límite superior de la parte integral.</p>
+<p>Default: 0.0</p>
+<h5 id="gainsi_clamp_min-double">gains.<dof_names>.i_clamp_min (double)</h5>
+<p>Límite inferior de la parte integral.</p>
+<p>Default: 0.0</p>
+<h5 id="gainsfeedforward_gain-double">gains.<dof_names>.feedforward_gain (double)</h5>
+<p>Ganancia para la parte feed-forward.</p>
+<p>Default: 0.0</p>
+<h5 id="gainsangle_wraparound-bool">gains.<dof_names>.angle_wraparound (bool)</h5>
+<p>Para articulaciones que giran completamente (es decir, son continuas). Normaliza el error de posición al rango de -π a π</p>
+<p>Default: false</p>
+<h5 id="gainssave_i_term-bool">gains.<dof_names>.save_i_term (bool)</h5>
+<p>Indica si el término integral se mantiene después de la reactivación</p>
+<p>Default: true</p>
+<h4 id="ejemplo_4">Ejemplo</h4>
+<p>Ejemplo de fichero de configuración yaml.</p>
+<details class="example" open="open">
+<summary>Example</summary>
+<div class="highlight"><pre><span></span><code>test_pid_controller:
+    ros__parameters:
+        dof_names:
+        - joint1
+
+        command_interface: position
+
+        reference_and_state_interfaces: [&quot;position&quot;]
+
+        gains:
+            joint1: {p: 1.0, i: 2.0, d: 3.0, i_clamp_max: 5.0, i_clamp_min: -5.0}
+
+test_pid_controller_angle_wraparound_on:
+    ros__parameters:
+        dof_names:
+        - joint1
+
+        command_interface: position
+
+        reference_and_state_interfaces: [&quot;position&quot;]
+
+        gains:
+            joint1: {p: 1.0, i: 2.0, d: 3.0, i_clamp_max: 5.0, i_clamp_min: -5.0, angle_wraparound: true}
+
+test_pid_controller_with_feedforward_gain:
+    ros__parameters:
+        dof_names:
+        - joint1
+
+        command_interface: position
+
+        reference_and_state_interfaces: [&quot;position&quot;]
+
+        gains:
+            joint1: {p: 0.5, i: 0.0, d: 0.0, i_clamp_max: 5.0, i_clamp_min: -5.0, feedforward_gain: 1.0}
+
+test_pid_controller_with_feedforward_gain_dual_interface:
+    ros__parameters:
+        dof_names:
+        - joint1
+        - joint2
+
+        command_interface: velocity
+
+        reference_and_state_interfaces: [&quot;position&quot;, &quot;velocity&quot;]
+
+        gains:
+            joint1: {p: 0.5, i: 0.3, d: 0.4, i_clamp_max: 5.0, i_clamp_min: -5.0, feedforward_gain: 1.0}
+            joint2: {p: 0.5, i: 0.3, d: 0.4, i_clamp_max: 5.0, i_clamp_min: -5.0, feedforward_gain: 1.0}
+
+test_save_i_term_off:
+    ros__parameters:
+        dof_names:
+        - joint1
+
+        command_interface: position
+
+        reference_and_state_interfaces: [&quot;position&quot;]
+
+        gains:
+            joint1: {p: 1.0, i: 2.0, d: 3.0, i_clamp_max: 5.0, i_clamp_min: -5.0, save_i_term: false}
+
+test_save_i_term_on:
+    ros__parameters:
+        dof_names:
+        - joint1
+
+        command_interface: position
+
+        reference_and_state_interfaces: [&quot;position&quot;]
+
+        gains:
+            joint1: {p: 1.0, i: 2.0, d: 3.0, i_clamp_max: 5.0, i_clamp_min: -5.0, save_i_term: true}
+</code></pre></div>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.select", "content.code.copy"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
